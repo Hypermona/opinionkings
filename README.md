@@ -1,1 +1,1 @@
-"# opinionkings" 
+# opinionkings
