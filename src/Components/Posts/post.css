@@ -1,0 +1,38 @@
+.post-container {
+  margin: 5px auto;
+  padding: 10px;
+  display: grid;
+  gap: 0.3rem;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto auto;
+  grid-template-areas:
+    "header image"
+    "body image"
+    "tail image";
+}
+.header {
+  grid-area: header;
+}
+.body {
+  grid-area: body;
+}
+.tail {
+  grid-area: tail;
+}
+.image {
+  grid-area: image;
+  margin: auto;
+  width: 300px;
+  height: 300px;
+}
+@media only screen and (max-width: 600px) {
+  .post-container {
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "header "
+      "image"
+      "body "
+      "tail ";
+  }
+}

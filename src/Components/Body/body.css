@@ -1,4 +1,4 @@
-.container {
+.body-container {
   display: grid;
   gap: 0.5rem;
   grid-template-columns: 0.8fr 2fr 0.9fr;
@@ -23,9 +23,9 @@
 
 /* Media query for smart phones and mobiles */
 @media only screen and (max-width: 600px) {
-  .container {
+  .body-container {
     grid-template-columns: 100vw;
-    grid-template-rows: 100vh 100vh 100vh;
+    grid-template-rows: auto 100vh 100vh;
     grid-template-areas:
       "category"
       " posts"
