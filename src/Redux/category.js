@@ -11,7 +11,7 @@ const categorySlice = createSlice({
       state.loading = true;
     },
     [fetchCategory.fulfilled]: (state, action) => {
-      state.categories = action.playload;
+      state.categories = action.payload;
       state.loading = false;
     },
   },

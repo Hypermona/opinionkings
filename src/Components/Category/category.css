@@ -1,0 +1,21 @@
+.category {
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+}
+.chip {
+  margin: 5px auto;
+  min-width: 10rem;
+}
+@media only screen and (max-width: 600px) {
+  .category {
+    width: 100%;
+    flex-direction: row;
+    margin: 5px auto;
+    overflow: scroll;
+  }
+  .chip {
+    margin: 5px 2px;
+    min-width: 6rem;
+  }
+}
