@@ -14,6 +14,10 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import Brightness7Icon from "@material-ui/icons/Brightness7";
+import Brightness4Icon from "@material-ui/icons/Brightness4";
+import { useDispatch, useSelector } from "react-redux";
+import { setTheme } from "../../Redux/theme";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -83,6 +87,8 @@ export default function Header() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
+  const { preferedTheme } = useSelector((state) => state.theme);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -132,8 +138,14 @@ export default function Header() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
+        <IconButton>
+          <Brightness7Icon />
+          <Brightness4Icon />
+        </IconButton>
+      </MenuItem>
+      <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
+          <Badge badgeContent={1} color="secondary">
             <MailIcon />
           </Badge>
         </IconButton>
@@ -174,7 +186,7 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Opinion Kings
+            Opinion Kings....
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -191,6 +203,9 @@ export default function Header() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <IconButton onClick={() => dispatch(setTheme(!preferedTheme))} color="inherit">
+              {preferedTheme ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
