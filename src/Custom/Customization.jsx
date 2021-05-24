@@ -12,6 +12,7 @@ export default function Customization({ children }) {
     palette: {
       background: {
         default: finalTheme ? "#1C1124" : "#C77DFF",
+        paper: finalTheme ? "#321F40" : "#CDA1FF",
       },
       type: finalTheme ? "dark" : "light",
       primary: {
