@@ -136,3 +136,15 @@ export const USERS = [
     joined: "Sun May 23 2021 21:48:49 GMT+0530 (India Standard Time)",
   },
 ];
+
+export const CATEGORY = [
+  "Social",
+  "Politics",
+  "Movie",
+  "Music",
+  "Trading",
+  "Finance",
+  "Travel",
+  "Electronics",
+  "Technology",
+];
