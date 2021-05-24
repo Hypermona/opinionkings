@@ -11,7 +11,7 @@ export default function Customization({ children }) {
   const theme = createMuiTheme({
     palette: {
       background: {
-        default: finalTheme ? "#1C1124" : "#C77DFF",
+        default: finalTheme ? "#1C1124" : "#f3e5f5",
         paper: finalTheme ? "#321F40" : "#CDA1FF",
       },
       type: finalTheme ? "dark" : "light",

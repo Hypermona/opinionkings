@@ -137,11 +137,11 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton>
-          <Brightness7Icon />
-          <Brightness4Icon />
+      <MenuItem onClick={() => dispatch(setTheme(!preferedTheme))}>
+        <IconButton color="inherit">
+          {preferedTheme ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
+        <p>Dark/Light</p>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">

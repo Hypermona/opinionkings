@@ -13,6 +13,7 @@
     flex-direction: row;
     margin: 5px auto;
     overflow: scroll;
+    cursor: pointer;
   }
   .chip {
     margin: 5px 2px;
