@@ -1,6 +1,8 @@
 import React from "react";
 import Category from "../Category/Category";
+import FollowCreators from "../FollowCreators/FollowCreators";
 import Post from "../Posts/Post";
+
 import "./body.css";
 
 function Body() {
@@ -12,7 +14,9 @@ function Body() {
       <div className="posts">
         <Post />
       </div>
-      <div className="explore"></div>
+      <div className="explore">
+        <FollowCreators />
+      </div>
     </div>
   );
 }
