@@ -14,13 +14,14 @@ function Post() {
     dispatch(fetchPosts());
   }, [dispatch]);
   const { posts, loading } = useSelector((state) => state.posts);
+
   return (
     <>
       {!loading &&
         posts.map((post, i) => (
           <Paper className="post-container" key={i}>
             <div className="header">
-              <PostHead />
+              <PostHead userId={post.author} dateAndTime={post.dateAndTime} />
             </div>
             <div className="body">
               <PostBody post={post} />

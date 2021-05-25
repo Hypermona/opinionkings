@@ -1,0 +1,31 @@
+.header-container {
+  display: flex;
+}
+.name {
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+}
+.user-name {
+  margin: 0;
+  padding: 0;
+}
+.check-badge {
+  font-size: 1rem !important;
+  margin-bottom: -2px;
+  margin-left: 3px;
+}
+.head-about {
+  margin: auto 10px;
+}
+.date-time {
+  font-size: 0.7rem;
+  margin: auto 0 5px 0;
+}
+/* @media only screen and (max-width: 600px) {
+  .check-badge {
+    font-size: 1rem;
+    margin-bottom: -2px;
+    margin-left: 3px;
+  }
+} */
