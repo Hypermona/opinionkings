@@ -45,7 +45,7 @@ function PostHead({ userId, dateAndTime }) {
             <p className="name">
               {user.name}
               <Tooltip title="verified" placement="right-start">
-                <CheckCircleIcon className="check-badge" />
+                <CheckCircleIcon className="check-badge" style={{ color: "#289bd7" }} />
               </Tooltip>
             </p>
             <p className="user-name">@{user.userName}</p>

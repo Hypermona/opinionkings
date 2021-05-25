@@ -7,6 +7,7 @@
   padding: 0;
 }
 .user-name {
+  color: gray;
   margin: 0;
   padding: 0;
 }
@@ -19,6 +20,7 @@
   margin: auto 10px;
 }
 .date-time {
+  color: gray;
   font-size: 0.7rem;
   margin: auto 0 5px 0;
 }

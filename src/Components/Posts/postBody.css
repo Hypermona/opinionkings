@@ -10,3 +10,12 @@
   -moz-background-clip: text;
   -moz-text-fill-color: transparent; */
 }
+@media only screen and (max-width: 600px) {
+  .title {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  #description {
+    display: none !important;
+  }
+}

@@ -26,7 +26,9 @@ function PostBody({ post }) {
   return (
     <div className="content">
       <div className="title">{post.title}</div>
-      <div className={classes.description}>{post.shortDescription}</div>
+      <div className={classes.description} id="description">
+        {post.shortDescription}
+      </div>
     </div>
   );
 }
