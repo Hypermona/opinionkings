@@ -37,21 +37,22 @@ function FollowCreators() {
       <List className={classes.root} component="nav">
         {!loading &&
           users.map((u) => (
-            <>
+            <div>
               <ListItem key={u.userName} button>
                 <ListItemIcon>
                   <Avatar src={u.profilePic} alt={u.name} />
                 </ListItemIcon>
                 <ListItemText primary={u.name} secondary={u.userName} />
                 <Button
+                  size="small"
                   variant="outlined"
-                  style={{ color: "white", background: "blue", borderRadius: 18 }}
+                  style={{ color: "#289bd7", borderColor: "#289bd7", borderRadius: 18 }}
                 >
                   Follow
                 </Button>
               </ListItem>
               <Divider />
-            </>
+            </div>
           ))}
       </List>
     </div>

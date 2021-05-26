@@ -1,5 +1,6 @@
 import React from "react";
 import Category from "../Category/Category";
+import CreatePost from "../CreatePosts/CreatePost";
 import FollowCreators from "../FollowCreators/FollowCreators";
 import Post from "../Posts/Post";
 
@@ -15,6 +16,7 @@ function Body() {
         <Post />
       </div>
       <div className="explore">
+        <CreatePost />
         <FollowCreators />
       </div>
     </div>
