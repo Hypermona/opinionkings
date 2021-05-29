@@ -2,12 +2,15 @@ import IconButton from "@material-ui/core/IconButton";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import React from "react";
 import { useTheme } from "@material-ui/core/styles";
+import Link from "react-router-dom/Link";
 
 function CreatePost() {
   const theme = useTheme();
   return (
-    <div
+    <Link
+      to="/edit"
       style={{
+        textDecoration: "none",
         display: "flex",
         flexDirection: "center",
         justifyContent: "center",
@@ -32,7 +35,7 @@ function CreatePost() {
       >
         Ask Opinion
       </p>
-    </div>
+    </Link>
   );
 }
 
