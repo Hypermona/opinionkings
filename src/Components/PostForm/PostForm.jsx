@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import "./postForm.css";
 
 function PostForm() {
   const { register, handleSubmit } = useForm();

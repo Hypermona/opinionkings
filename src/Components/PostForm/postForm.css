@@ -1,0 +1,15 @@
+input {
+  color: brown;
+  display: block;
+  background: transparent;
+  width: 100%;
+  padding: 10px;
+  outline: 0;
+  border: none;
+  border-bottom: solid 1px rgb(54, 30, 82);
+  text-decoration: none;
+  margin: 30px;
+}
+input::placeholder {
+  color: brown;
+}
