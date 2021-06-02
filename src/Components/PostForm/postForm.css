@@ -9,6 +9,9 @@ input {
   border-bottom: solid 1px rgb(54, 30, 82);
   text-decoration: none;
   margin: 30px;
+  transform: translate(0, 0);
+  transform-origin: 0 0;
+  transition: transform 120ms ease-in;
 }
 input::placeholder {
   color: brown;
