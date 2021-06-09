@@ -3,7 +3,7 @@ import Category from "../Category/Category";
 import CreatePost from "../CreatePosts/CreatePost";
 import FollowCreators from "../FollowCreators/FollowCreators";
 import Post from "../Posts/Post";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./body.css";
 import PostForm from "../PostForm/PostForm";
@@ -12,37 +12,23 @@ function Body() {
   return (
     <Router>
       <div className="body-container">
-        <div className="category">
-          <Switch>
-            <Route exact path="/">
+        <Switch>
+          <Route exact path="/">
+            <div className="category">
               <Category />
-            </Route>
-            <Route exact path="/edit">
-              <div></div>
-            </Route>
-          </Switch>
-        </div>
-        <div className="posts">
-          <Switch>
-            <Route exact path="/">
+            </div>
+            <div className="posts">
               <Post />
-            </Route>
-            <Route exact path="/edit">
-              <PostForm />
-            </Route>
-          </Switch>
-        </div>
-        <div className="explore">
-          <Switch>
-            <Route exact path="/">
+            </div>
+            <div className="explore">
               <CreatePost />
               <FollowCreators />
-            </Route>
-            <Route exact path="/edit">
-              <div></div>
-            </Route>
-          </Switch>
-        </div>
+            </div>
+          </Route>
+          <Route exact path="/edit">
+            <PostForm />
+          </Route>
+        </Switch>
       </div>
     </Router>
   );

@@ -1,0 +1,28 @@
+.crop-container {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "cropper"
+    "controls";
+}
+.cropper {
+  position: relative;
+  height: 50vh;
+  width: 100vw;
+  margin: auto;
+  grid-area: cropper;
+}
+.controls {
+  width: 50%;
+  margin: auto;
+  position: relative;
+  grid-area: controls;
+}
+.slider {
+  margin: 10px 0;
+}
+.done {
+  margin: auto;
+}
