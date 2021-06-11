@@ -18,6 +18,7 @@ import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
 import { useDispatch, useSelector } from "react-redux";
 import { setTheme } from "../../Redux/theme";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -121,6 +122,12 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
+      <MenuItem>
+        <Link to="/auth/true">Sign Up</Link>
+      </MenuItem>
+      <MenuItem>
+        <Link to="/auth/false">Log In</Link>
+      </MenuItem>
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
@@ -137,6 +144,12 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      <MenuItem>
+        <Link to="/auth/true">Sign Up</Link>
+      </MenuItem>
+      <MenuItem>
+        <Link to="/auth/false">Log In</Link>
+      </MenuItem>
       <MenuItem onClick={() => dispatch(setTheme(!preferedTheme))}>
         <IconButton color="inherit">
           {preferedTheme ? <Brightness7Icon /> : <Brightness4Icon />}
@@ -175,7 +188,7 @@ export default function Header() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" elevation={0}>
         <Toolbar>
           <IconButton
             edge="start"

@@ -8,6 +8,7 @@ import PostImageModal from "./PostImageModal";
 function PostForm() {
   const [previewImg, setPreviewImg] = React.useState(null);
   const { register, handleSubmit } = useForm();
+
   const onSubmit = (data) => {
     console.log("form data", data);
 

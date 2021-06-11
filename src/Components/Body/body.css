@@ -6,15 +6,15 @@
   grid-template-areas: "category posts explore";
 }
 .category {
-  grid-area: "category";
+  grid-area: category;
   /* background-color: aliceblue; */
 }
 .posts {
-  grid-area: "posts";
+  grid-area: posts;
   /* background-color: aliceblue; */
 }
 .explore {
-  grid-area: "explore";
+  grid-area: explore;
   /* background-color: aliceblue; */
 }
 /* Media query for small laptops and Tablets */

@@ -3,17 +3,18 @@ import Category from "../Category/Category";
 import CreatePost from "../CreatePosts/CreatePost";
 import FollowCreators from "../FollowCreators/FollowCreators";
 import Post from "../Posts/Post";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import "./body.css";
 import PostForm from "../PostForm/PostForm";
+import Auth from "../Auth/Auth";
 
 function Body() {
   return (
-    <Router>
-      <div className="body-container">
-        <Switch>
-          <Route exact path="/">
+    <div>
+      <Switch>
+        <Route exact path="/">
+          <div className="body-container">
             <div className="category">
               <Category />
             </div>
@@ -24,13 +25,16 @@ function Body() {
               <CreatePost />
               <FollowCreators />
             </div>
-          </Route>
-          <Route exact path="/edit">
-            <PostForm />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+          </div>
+        </Route>
+        <Route exact path="/edit">
+          <PostForm />
+        </Route>
+        <Route exact path="/auth/:signUp">
+          <Auth />
+        </Route>
+      </Switch>
+    </div>
   );
 }
 
