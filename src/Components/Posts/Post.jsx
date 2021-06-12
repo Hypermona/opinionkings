@@ -14,7 +14,7 @@ function Post() {
     dispatch(fetchPosts());
   }, [dispatch]);
   const { posts, loading } = useSelector((state) => state.posts);
-
+  console.log(posts);
   return (
     <>
       {!loading &&
