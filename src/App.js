@@ -1,17 +1,16 @@
 import React from "react";
-import store from "./Redux/store";
-import { Provider } from "react-redux";
 import "./App.css";
 import Main from "./Components/Main/Main";
 import Customization from "./Custom/Customization";
+import Counter from "./Store/state";
 
 function App() {
   return (
-    <Provider store={store}>
+    <Counter.Provider>
       <Customization>
         <Main />
       </Customization>
-    </Provider>
+    </Counter.Provider>
   );
 }
 

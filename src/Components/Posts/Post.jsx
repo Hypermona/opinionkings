@@ -1,23 +1,23 @@
 import React from "react";
 import PostBody from "./PostBody";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "../../Redux/posts";
 import PostHead from "./PostHead";
 import PostTail from "./PostTail";
 import PostImage from "./PostImage";
 import Paper from "@material-ui/core/Paper";
 import "./post.css";
+import State from "../../Store/state";
+import { POSTS } from "../../data";
 
 function Post() {
-  const dispatch = useDispatch();
+  const state = State.useContainer();
+  const { posts, setPosts } = state.posts;
   React.useEffect(() => {
-    dispatch(fetchPosts());
-  }, [dispatch]);
-  const { posts, loading } = useSelector((state) => state.posts);
-
+    setPosts(POSTS);
+  }, [setPosts]);
+  console.log(state.posts.posts);
   return (
     <>
-      {!loading &&
+      {posts &&
         posts.map((post, i) => (
           <Paper className="post-container" key={i}>
             <div className="header">

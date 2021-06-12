@@ -7,10 +7,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../../Redux/users";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { USERS } from "../../data";
+import State from "../../Store/state";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
 
 function FollowCreators() {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const state = State.useContainer();
+  const { users, setUsers } = state.users;
   React.useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
-  const { users, loading } = useSelector((state) => state.users);
+    setUsers(USERS);
+  }, [setUsers]);
   return (
     <div>
       <div className="follow-creator">
@@ -36,7 +36,7 @@ function FollowCreators() {
         </Typography>
       </div>
       <List className={classes.root} component="nav">
-        {!loading &&
+        {users &&
           users.map((u) => (
             <div>
               <ListItem key={u.userName} button>

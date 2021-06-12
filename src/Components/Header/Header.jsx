@@ -16,9 +16,8 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
-import { useDispatch, useSelector } from "react-redux";
-import { setTheme } from "../../Redux/theme";
 import { Link } from "react-router-dom";
+import Store from "../../Store/state";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -88,8 +87,10 @@ export default function Header() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const dispatch = useDispatch();
-  const { preferedTheme } = useSelector((state) => state.theme);
+  const state = Store.useContainer();
+
+  const { theme, setTheme } = state.theme;
+  console.log("theme",theme)
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -150,10 +151,8 @@ export default function Header() {
       <MenuItem>
         <Link to="/auth/false">Log In</Link>
       </MenuItem>
-      <MenuItem onClick={() => dispatch(setTheme(!preferedTheme))}>
-        <IconButton color="inherit">
-          {preferedTheme ? <Brightness7Icon /> : <Brightness4Icon />}
-        </IconButton>
+      <MenuItem onClick={() => setTheme(!theme)}>
+        <IconButton color="inherit">{theme ? <Brightness7Icon /> : <Brightness4Icon />}</IconButton>
         <p>Dark/Light</p>
       </MenuItem>
       <MenuItem>
@@ -216,8 +215,8 @@ export default function Header() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton onClick={() => dispatch(setTheme(!preferedTheme))} color="inherit">
-              {preferedTheme ? <Brightness7Icon /> : <Brightness4Icon />}
+            <IconButton onClick={() => setTheme(!theme)} color="inherit">
+              {theme ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">

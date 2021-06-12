@@ -4,23 +4,29 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
-import { useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { useForm } from "react-hook-form";
-
+import State from "../../Store/state";
 import "./auth.css";
 
 function Auth() {
+  const state = State.useContainer();
+  const { finalTheme } = state.finalTheme;
+  const { count, setcount } = state.counter;
+  console.log(count);
   const { register, handleSubmit } = useForm();
   const { signUp } = useParams();
   const _signUp = signUp === "true" ? true : false;
-  const { preferedTheme } = useSelector((state) => state.finalTheme);
   const [visibility, setVisibility] = useState(false);
 
-  const onSubmit = useCallback(async (data) => {
-    console.log(data);
-  }, []);
+  const onSubmit = useCallback(
+    async (data) => {
+      console.log(data);
+      setcount(5);
+    },
+    [setcount]
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -30,7 +36,7 @@ function Auth() {
         <TextField
           className="input"
           required={_signUp ? true : false}
-          color={preferedTheme ? "secondary" : "primary"}
+          color={finalTheme ? "secondary" : "primary"}
           autoFocus
           {...register("userName")}
           label="Username"
@@ -42,7 +48,7 @@ function Auth() {
           className="input"
           {...register("email")}
           required={_signUp ? true : false}
-          color={preferedTheme ? "secondary" : "primary"}
+          color={finalTheme ? "secondary" : "primary"}
           label="Email"
           variant="outlined"
         />
@@ -50,7 +56,7 @@ function Auth() {
           className="input"
           {...register("password")}
           required={_signUp ? true : false}
-          color={preferedTheme ? "secondary" : "primary"}
+          color={finalTheme ? "secondary" : "primary"}
           type={visibility ? "text" : "password"}
           label="Password"
           variant="outlined"
@@ -68,7 +74,7 @@ function Auth() {
         <Button
           type="submit"
           variant="contained"
-          color={preferedTheme ? "secondary" : "primary"}
+          color={finalTheme ? "secondary" : "primary"}
           size="large"
         >
           {_signUp ? "SignUp" : "LogIn"}

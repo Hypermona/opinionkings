@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useSelector, useDispatch } from "react-redux";
 import deepPurple from "@material-ui/core/colors/deepPurple";
-import { setFinalTheme } from "../Redux/finalTheme";
+import State from "../Store/state";
 
 export default function Customization({ children }) {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: light)");
-  const { preferedTheme } = useSelector((state) => state.theme);
-  const finalTheme = prefersDarkMode ^ preferedTheme;
-  const dispatch = useDispatch();
+  const state = State.useContainer();
+  const { theme: preferedTheme } = state.theme;
+  const { setFinalTheme } = state.finalTheme;
 
-  dispatch(setFinalTheme(finalTheme));
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: light)");
+  const finalTheme = prefersDarkMode ^ preferedTheme;
+
+  useEffect(() => {
+    setFinalTheme(finalTheme);
+  });
 
   const theme = createMuiTheme({
     palette: {
