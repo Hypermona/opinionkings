@@ -2,15 +2,15 @@ import React from "react";
 import "./App.css";
 import Main from "./Components/Main/Main";
 import Customization from "./Custom/Customization";
-import Counter from "./Store/state";
+import Provider from "./Store/provider";
 
 function App() {
   return (
-    <Counter.Provider>
+    <Provider>
       <Customization>
         <Main />
       </Customization>
-    </Counter.Provider>
+    </Provider>
   );
 }
 

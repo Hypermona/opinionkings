@@ -10,7 +10,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { USERS } from "../../data";
-import State from "../../Store/state";
+import Users from "../../Store/users";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,8 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 function FollowCreators() {
   const classes = useStyles();
-  const state = State.useContainer();
-  const { users, setUsers } = state.users;
+  const { users, setUsers } = Users.useContainer();
   React.useEffect(() => {
     setUsers(USERS);
   }, [setUsers]);

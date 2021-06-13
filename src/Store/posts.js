@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { createContainer } from "unstated-next";
 
-export default function Posts(initialCount = []) {
+function Posts(initialCount = []) {
   let [posts, setPosts] = useState(initialCount);
   return { posts, setPosts };
 }
+export default createContainer(Posts);

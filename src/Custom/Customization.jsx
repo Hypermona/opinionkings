@@ -3,12 +3,12 @@ import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import deepPurple from "@material-ui/core/colors/deepPurple";
-import State from "../Store/state";
+import Theme from "../Store/theme";
+import FinalTheme from "../Store/finalTheme";
 
 export default function Customization({ children }) {
-  const state = State.useContainer();
-  const { theme: preferedTheme } = state.theme;
-  const { setFinalTheme } = state.finalTheme;
+  const { theme: preferedTheme } = Theme.useContainer();
+  const { setFinalTheme } = FinalTheme.useContainer();
 
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: light)");
   const finalTheme = prefersDarkMode ^ preferedTheme;

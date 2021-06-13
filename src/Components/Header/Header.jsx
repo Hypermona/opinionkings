@@ -17,7 +17,7 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
 import { Link } from "react-router-dom";
-import Store from "../../Store/state";
+import Theme from "../../Store/theme";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -87,10 +87,9 @@ export default function Header() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const state = Store.useContainer();
 
-  const { theme, setTheme } = state.theme;
-  console.log("theme",theme)
+  const { theme, setTheme } = Theme.useContainer();
+  console.log("theme", theme);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);

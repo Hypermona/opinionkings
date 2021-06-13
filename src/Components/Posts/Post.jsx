@@ -1,20 +1,20 @@
-import React from "react";
+import React, { memo } from "react";
 import PostBody from "./PostBody";
 import PostHead from "./PostHead";
 import PostTail from "./PostTail";
 import PostImage from "./PostImage";
 import Paper from "@material-ui/core/Paper";
 import "./post.css";
-import State from "../../Store/state";
+import Posts from "../../Store/posts";
 import { POSTS } from "../../data";
 
 function Post() {
-  const state = State.useContainer();
-  const { posts, setPosts } = state.posts;
+  const _Posts = Posts.useContainer();
+  const { posts, setPosts } = _Posts;
   React.useEffect(() => {
     setPosts(POSTS);
   }, [setPosts]);
-  console.log(state.posts.posts);
+  console.log(posts);
   return (
     <>
       {posts &&
@@ -38,4 +38,4 @@ function Post() {
   );
 }
 
-export default Post;
+export default memo(Post);

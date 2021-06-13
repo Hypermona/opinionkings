@@ -7,13 +7,15 @@ import IconButton from "@material-ui/core/IconButton";
 import { useParams, Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { useForm } from "react-hook-form";
-import State from "../../Store/state";
+import Counter from "../../Store/counter";
+import FinalTheme from "../../Store/finalTheme";
 import "./auth.css";
 
 function Auth() {
-  const state = State.useContainer();
-  const { finalTheme } = state.finalTheme;
-  const { count, setcount } = state.counter;
+  const counter = Counter.useContainer();
+  const _finalTheme = FinalTheme.useContainer();
+  const { finalTheme } = _finalTheme;
+  const { count, setcount } = counter;
   console.log(count);
   const { register, handleSubmit } = useForm();
   const { signUp } = useParams();

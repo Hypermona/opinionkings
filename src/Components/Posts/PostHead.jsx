@@ -6,13 +6,12 @@ import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import State from "../../Store/state";
+import Users from "../../Store/users";
 import "./postHead.css";
 import { USERS } from "../../data";
 
 function PostHead({ userId, dateAndTime }) {
-  const state = State.useContainer();
-  const { users, setUsers } = state.users;
+  const { users, setUsers } = Users.useContainer();
   React.useEffect(() => {
     setUsers(USERS);
   }, [setUsers]);
