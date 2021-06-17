@@ -2,7 +2,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import React from "react";
 import { useTheme } from "@material-ui/core/styles";
-import Link from "react-router-dom/Link";
+import { Link } from "react-router-dom";
 
 function CreatePost() {
   const theme = useTheme();

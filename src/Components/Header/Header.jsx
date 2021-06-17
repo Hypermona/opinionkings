@@ -16,8 +16,10 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
+import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import Theme from "../../Store/theme";
+import { getToken } from "../../Store/token";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -122,12 +124,6 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem>
-        <Link to="/auth/true">Sign Up</Link>
-      </MenuItem>
-      <MenuItem>
-        <Link to="/auth/false">Log In</Link>
-      </MenuItem>
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
@@ -144,43 +140,60 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <Link to="/auth/true">Sign Up</Link>
-      </MenuItem>
-      <MenuItem>
-        <Link to="/auth/false">Log In</Link>
-      </MenuItem>
       <MenuItem onClick={() => setTheme(!theme)}>
         <IconButton color="inherit">{theme ? <Brightness7Icon /> : <Brightness4Icon />}</IconButton>
         <p>Dark/Light</p>
       </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={1} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      {getToken() ? (
+        <div>
+          <MenuItem>
+            <IconButton aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={1} color="secondary">
+                <MailIcon />
+              </Badge>
+            </IconButton>
+            <p>Messages</p>
+          </MenuItem>
+          <MenuItem>
+            <IconButton aria-label="show 11 new notifications" color="inherit">
+              <Badge badgeContent={11} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <p>Notifications</p>
+          </MenuItem>
+          <MenuItem onClick={handleProfileMenuOpen}>
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="primary-search-account-menu"
+              aria-haspopup="true"
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <p>Profile</p>
+          </MenuItem>
+        </div>
+      ) : (
+        <div>
+          <MenuItem>
+            <Link
+              to="/auth/true"
+              style={{ color: "inherit", textDecoration: "none", marginLeft: 50 }}
+            >
+              Sign Up
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link
+              to="/auth/false"
+              style={{ color: "inherit", textDecoration: "none", marginLeft: 50 }}
+            >
+              Log In
+            </Link>
+          </MenuItem>{" "}
+        </div>
+      )}
     </Menu>
   );
 
@@ -217,26 +230,43 @@ export default function Header() {
             <IconButton onClick={() => setTheme(!theme)} color="inherit">
               {theme ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            {getToken() ? (
+              <>
+                <IconButton aria-label="show 4 new mails" color="inherit">
+                  <Badge badgeContent={4} color="secondary">
+                    <MailIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton aria-label="show 17 new notifications" color="inherit">
+                  <Badge badgeContent={17} color="secondary">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              </>
+            ) : (
+              <>
+                <Button>
+                  <Link to="/auth/true" style={{ color: "white", textDecoration: "none" }}>
+                    Sign Up
+                  </Link>
+                </Button>
+                <Button>
+                  <Link to="/auth/false" style={{ color: "white", textDecoration: "none" }}>
+                    Log In
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

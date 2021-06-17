@@ -4,32 +4,34 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { useForm } from "react-hook-form";
-import Counter from "../../Store/counter";
 import FinalTheme from "../../Store/finalTheme";
+import { getToken, setToken } from "../../Store/token";
 import "./auth.css";
 
 function Auth() {
-  const counter = Counter.useContainer();
-  const _finalTheme = FinalTheme.useContainer();
-  const { finalTheme } = _finalTheme;
-  const { count, setcount } = counter;
-  console.log(count);
+  const token = getToken();
+  const { finalTheme } = FinalTheme.useContainer();
   const { register, handleSubmit } = useForm();
   const { signUp } = useParams();
+  const history = useHistory();
   const _signUp = signUp === "true" ? true : false;
   const [visibility, setVisibility] = useState(false);
 
   const onSubmit = useCallback(
     async (data) => {
-      console.log(data);
-      setcount(5);
+      if (_signUp) {
+        history.push("/editProfile", { ...data, new: true });
+      } else {
+        setToken("terter");
+        console.log(data);
+      }
     },
-    [setcount]
+    [history, _signUp]
   );
-
+  console.log(token);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="signup">
@@ -73,13 +75,15 @@ function Auth() {
           }}
           helperText={_signUp ? "use numbers, letters and special charecters" : ""}
         />
+
         <Button
           type="submit"
+          // disabled={token ? true : false}
           variant="contained"
           color={finalTheme ? "secondary" : "primary"}
           size="large"
         >
-          {_signUp ? "SignUp" : "LogIn"}
+          {_signUp ? "Sign Up" : "LogIn"}
         </Button>
 
         {_signUp ? (

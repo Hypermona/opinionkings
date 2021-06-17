@@ -6,6 +6,16 @@ import deepPurple from "@material-ui/core/colors/deepPurple";
 import Theme from "../Store/theme";
 import FinalTheme from "../Store/finalTheme";
 
+const primary = {
+  main: "#372044",
+  light: deepPurple[900],
+};
+const secondary = "#CADB2A";
+const paper = {
+  dark: "#22142a",
+  light: "#ffffff",
+};
+export { primary, secondary, paper };
 export default function Customization({ children }) {
   const { theme: preferedTheme } = Theme.useContainer();
   const { setFinalTheme } = FinalTheme.useContainer();

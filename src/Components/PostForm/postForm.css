@@ -1,18 +1,19 @@
-input {
-  color: brown;
-  display: block;
-  background: transparent;
-  width: 80%;
-  padding: 10px;
-  outline: 0;
-  border: none;
-  border-bottom: solid 1px rgb(54, 30, 82);
-  text-decoration: none;
-  margin: 30px;
-  transform: translate(0, 0);
-  transform-origin: 0 0;
-  transition: transform 120ms ease-in;
+.edit-post {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100wh;
+
+  align-items: center;
+  justify-content: center;
 }
-input::placeholder {
-  color: brown;
+.text-field {
+  width: 40rem;
+  margin: 20px !important;
+}
+@media only screen and (max-width: 600px) {
+  .text-field {
+    width: 90vw;
+    margin: 20px !important;
+  }
 }

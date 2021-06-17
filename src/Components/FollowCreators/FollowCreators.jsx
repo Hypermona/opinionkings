@@ -27,6 +27,7 @@ function FollowCreators() {
   React.useEffect(() => {
     setUsers(USERS);
   }, [setUsers]);
+  console.log("hello");
   return (
     <div>
       <div className="follow-creator">
@@ -37,8 +38,8 @@ function FollowCreators() {
       <List className={classes.root} component="nav">
         {users &&
           users.map((u) => (
-            <div>
-              <ListItem key={u.userName} button>
+            <div key={u.userName}>
+              <ListItem button>
                 <ListItemIcon>
                   <Avatar src={u.profilePic} alt={u.name} />
                 </ListItemIcon>
@@ -59,4 +60,4 @@ function FollowCreators() {
   );
 }
 
-export default FollowCreators;
+export default React.memo(FollowCreators);

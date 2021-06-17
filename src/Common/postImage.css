@@ -1,4 +1,6 @@
 .crop-container {
+  background-color: gray;
+  width: 60vw;
   display: grid;
   gap: 10px;
   grid-template-columns: auto;
@@ -10,7 +12,7 @@
 .cropper {
   position: relative;
   height: 50vh;
-  width: 100vw;
+  width: inherit;
   margin: auto;
   grid-area: cropper;
 }
@@ -25,4 +27,9 @@
 }
 .done {
   margin: auto;
+}
+@media only screen and (max-width: 600px) {
+  .crop-container {
+    width: 100vw;
+  }
 }

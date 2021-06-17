@@ -14,12 +14,11 @@ function Post() {
   React.useEffect(() => {
     setPosts(POSTS);
   }, [setPosts]);
-  console.log(posts);
   return (
     <>
       {posts &&
         posts.map((post, i) => (
-          <Paper className="post-container" key={i}>
+          <Paper className="post-container" key={i} elevation={0}>
             <div className="header">
               <PostHead userId={post.author} dateAndTime={post.dateAndTime} />
             </div>

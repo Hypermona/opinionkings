@@ -5,17 +5,26 @@ import Posts from "./posts";
 import FinalTheme from "./finalTheme";
 import Users from "./users";
 
+// const states = [Counter, Theme, Posts, FinalTheme, Users];
+// const Provider = (props) => {
+//   return (
+//     <>
+//      {states.map(State=><State.Provider>)}
+//        {props.children}
+//      {states.map(State=></State.Provider>)}
+//     </>
+//   );
+// };
+// export default Provider;
 const Provider = (props) => {
   return (
-    <Counter.Provider>
+    <Users.Provider>
       <Theme.Provider>
         <Posts.Provider>
-          <FinalTheme.Provider>
-            <Users.Provider>{props.children}</Users.Provider>
-          </FinalTheme.Provider>
+          <FinalTheme.Provider>{props.children}</FinalTheme.Provider>
         </Posts.Provider>
       </Theme.Provider>
-    </Counter.Provider>
+    </Users.Provider>
   );
 };
 export default Provider;
