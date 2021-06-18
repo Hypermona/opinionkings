@@ -42,10 +42,10 @@ function Auth() {
           required={_signUp ? true : false}
           color={finalTheme ? "secondary" : "primary"}
           autoFocus
-          {...register("userName")}
-          label="Username"
+          {...register(_signUp ? "name" : "userName")}
+          label={_signUp ? "Full Name" : "Username"}
           variant="outlined"
-          helperText={_signUp ? "sholud only contain lowecase letters, numbers and underscore" : ""}
+          helperText={_signUp ? "Enter your full name" : ""}
         />
         {!_signUp && <p>or</p>}
         <TextField

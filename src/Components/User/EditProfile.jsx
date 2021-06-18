@@ -2,28 +2,56 @@ import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-
+import { useMutation } from "urql";
 import IconButton from "@material-ui/core/IconButton";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link, useLocation, useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { useForm } from "react-hook-form";
 import FinalTheme from "../../Store/finalTheme";
-import Token from "../../Store/token";
+import { setToken, getToken } from "../../Store/token";
 import PostImageModal from "../../Common/PostImageModal";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-
+import { SIGNUP } from "../../Queries/Auth";
 import "./editProfile.css";
 
 function EditProfile() {
+  const token = getToken();
   const { finalTheme } = FinalTheme.useContainer();
   const [previewImg, setPreviewImg] = useState(null);
-
-  const { register, handleSubmit } = useForm();
+  const [signUpResult, signUp] = useMutation(SIGNUP);
   const { state } = useLocation();
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      name: state.name,
+      email: state.email,
+    },
+  });
+
+  const { replace } = useHistory();
   console.log(useLocation());
-  const onSubmit = (data) => {
-    console.log(data);
-    window.location = "/";
+  const onSubmit = async (signUpData) => {
+    const variables = {
+      ...signUpData,
+      password: state.password,
+      image: previewImg,
+      new: state.new,
+    };
+    console.log("variables", variables);
+    // if (state.new) {
+    //   try {
+    //     const { data, error } = await signUp(variables);
+    //     console.log(data, error);
+    //     if (data.addUser !== null) {
+    //       console.log(data.addUser.token);
+    //       setToken(data.addUser.token);
+    //       replace("/");
+    //     } else if (error) {
+    //       console.log(error);
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -38,6 +66,7 @@ function EditProfile() {
           className="input"
           label="Full Name"
           variant="outlined"
+          defaultValue={state.name}
           color={finalTheme ? "secondary" : "primary"}
           {...register("name")}
         />
@@ -46,23 +75,21 @@ function EditProfile() {
           label="Bio"
           variant="outlined"
           color={finalTheme ? "secondary" : "primary"}
-          {...register("bio")}
+          // {...register("bio")}
         />
         <TextField
           className="input"
           label="Username"
           variant="outlined"
-          disabled={state.new}
-          value={state.userName}
           color={finalTheme ? "secondary" : "primary"}
-          {...register("username")}
+          {...register("userName")}
         />
         <TextField
           className="input"
           label="Email"
           variant="outlined"
-          value={state.email}
-          disabled={state.new}
+          disabled
+          defaultValue={state.email}
           color={finalTheme ? "secondary" : "primary"}
           {...register("email")}
         />
@@ -75,10 +102,10 @@ function EditProfile() {
               value="Hekko"
               color={finalTheme ? "secondary" : "primary"}
               inputProps={{ "aria-label": "primary checkbox" }}
-              {...register("termsAndPrivacy")}
+              // {...register("termsAndPrivacy")}
             />
           }
-          label="Accepted terms and condithons and privscy police"
+          label="Accepted terms and condithons and privacy police"
         />
 
         <div className="buttons">
@@ -89,6 +116,7 @@ function EditProfile() {
           <Button
             type="submit"
             className="button"
+            disabled={token | signUpResult.fetching}
             size="large"
             color={finalTheme ? "secondary" : "primary"}
             variant="contained"

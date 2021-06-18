@@ -30,7 +30,7 @@ export default function PostImageModal(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  console.log(props.previewImg);
+  // console.log(props.previewImg);
   return (
     <div>
       <div onClick={handleOpen} style={{ margin: props.cropShape === "round" ? "40px 0 0 0" : 0 }}>

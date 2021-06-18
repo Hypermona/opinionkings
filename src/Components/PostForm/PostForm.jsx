@@ -1,7 +1,7 @@
 import Button from "@material-ui/core/Button";
 import React from "react";
 import { useForm } from "react-hook-form";
-import ImagePreview from "../../Common/ImagePreview";
+// import ImagePreview from "../../Common/ImagePreview";
 import TextField from "@material-ui/core/TextField";
 import FinalTheme from "../../Store/finalTheme";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
