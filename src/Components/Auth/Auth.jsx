@@ -30,7 +30,7 @@ function Auth() {
       } else {
         login(data).then(({ data, error }) => {
           if (data.login) {
-            setToken(data.login.token);
+            setToken(data.login.token, data.login.token);
             history.replace("/");
           }
         });

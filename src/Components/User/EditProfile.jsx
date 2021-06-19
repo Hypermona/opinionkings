@@ -42,7 +42,7 @@ function EditProfile() {
         console.log(data, error);
         if (data.addUser !== null) {
           console.log(data.addUser.token);
-          setToken(data.addUser.token);
+          setToken(data.addUser.token, data.login.id);
           replace("/");
         } else if (error) {
           console.log(error);
