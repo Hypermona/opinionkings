@@ -4,8 +4,12 @@ import Slider from "@material-ui/core/Slider";
 import getCroppedImage from "../Functions/cropImage";
 import "./postImage.css";
 import { Button } from "@material-ui/core";
+import { paper } from "../Custom/Customization";
+import FinalTheme from "../Store/finalTheme";
 
-function PostImage({ closeModal, image, setPreviewImg }) {
+function PostImage({ closeModal, image, setPreviewImg, cropShape }) {
+  const { finalTheme } = FinalTheme.useContainer();
+
   const [imgUrl, setImgUrl] = useState("");
   const [rotation, setRotation] = useState(0);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -27,12 +31,14 @@ function PostImage({ closeModal, image, setPreviewImg }) {
   }, [croppedAreaPixels, rotation, closeModal, image, setPreviewImg]);
 
   return (
-    <div className="crop-container">
+    <div className="crop-container" style={{ background: finalTheme ? paper.dark : paper.light }}>
       <div className="cropper" onDoubleClick={() => setZoom(zoom >= 2 ? 1 : 2)}>
         <Cropper
           image={image}
           crop={crop}
           zoom={zoom}
+          aspect={cropShape === "round" ? 1 : 1.4}
+          cropShape={cropShape}
           rotation={rotation}
           onCropChange={setCrop}
           onZoomChange={setZoom}

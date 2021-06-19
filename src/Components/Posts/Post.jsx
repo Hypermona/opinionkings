@@ -1,25 +1,24 @@
-import React from "react";
+import React, { memo } from "react";
 import PostBody from "./PostBody";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "../../Redux/posts";
 import PostHead from "./PostHead";
 import PostTail from "./PostTail";
 import PostImage from "./PostImage";
 import Paper from "@material-ui/core/Paper";
 import "./post.css";
+import Posts from "../../Store/posts";
+import { POSTS } from "../../data";
 
 function Post() {
-  const dispatch = useDispatch();
+  const _Posts = Posts.useContainer();
+  const { posts, setPosts } = _Posts;
   React.useEffect(() => {
-    dispatch(fetchPosts());
-  }, [dispatch]);
-  const { posts, loading } = useSelector((state) => state.posts);
-  console.log(posts);
+    setPosts(POSTS);
+  }, [setPosts]);
   return (
     <>
-      {!loading &&
+      {posts &&
         posts.map((post, i) => (
-          <Paper className="post-container" key={i}>
+          <Paper className="post-container" key={i} elevation={0}>
             <div className="header">
               <PostHead userId={post.author} dateAndTime={post.dateAndTime} />
             </div>
@@ -38,4 +37,4 @@ function Post() {
   );
 }
 
-export default Post;
+export default memo(Post);

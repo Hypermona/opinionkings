@@ -1,13 +1,12 @@
 import React from "react";
-import store from "./Redux/store";
-import { Provider } from "react-redux";
 import "./App.css";
 import Main from "./Components/Main/Main";
 import Customization from "./Custom/Customization";
+import Provider from "./Store/provider";
 
 function App() {
   return (
-    <Provider store={store}>
+    <Provider>
       <Customization>
         <Main />
       </Customization>

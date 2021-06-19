@@ -1,0 +1,25 @@
+.edit-profile {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100wh;
+  align-items: center;
+  justify-content: center;
+}
+.input {
+  margin: 20px 0 !important;
+  width: 20rem !important;
+}
+.title {
+  font-size: 2rem;
+  font-weight: 100;
+}
+.buttons {
+  margin: 20px 0;
+  width: 20rem;
+  display: flex;
+  justify-content: space-around;
+}
+.button {
+  display: inline-block;
+}

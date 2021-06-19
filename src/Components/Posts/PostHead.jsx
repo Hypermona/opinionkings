@@ -6,17 +6,15 @@ import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import Users from "../../Store/users";
 import "./postHead.css";
-
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../../Redux/users";
+import { USERS } from "../../data";
 
 function PostHead({ userId, dateAndTime }) {
-  const dispatch = useDispatch();
+  const { users, setUsers } = Users.useContainer();
   React.useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
-  const { users, loading } = useSelector((state) => state.users);
+    setUsers(USERS);
+  }, [setUsers]);
   const user = users.filter((u) => u.userName === userId)[0];
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -38,7 +36,7 @@ function PostHead({ userId, dateAndTime }) {
   const _dateAndTime = new Date(dateAndTime).toLocaleDateString(undefined, options);
   return (
     <>
-      {!loading && (
+      {user && (
         <div className="header-container">
           <Avatar src={user.profilePic} alt={user.userName} />
           <div className="head-about">

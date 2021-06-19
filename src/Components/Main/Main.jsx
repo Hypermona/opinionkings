@@ -9,6 +9,7 @@ const client = createClient({
 });
 
 function Main() {
+  console.log("hello");
   return (
     <Provider value={client}>
       <Router>
