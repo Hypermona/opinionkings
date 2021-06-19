@@ -8,11 +8,14 @@ import { useParams, Link, useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { useForm } from "react-hook-form";
 import FinalTheme from "../../Store/finalTheme";
+import { LOGIN } from "../../Queries/Auth";
+import { useMutation } from "urql";
 import { getToken, setToken } from "../../Store/token";
 import "./auth.css";
 
 function Auth() {
   const token = getToken();
+  const [loginResult, login] = useMutation(LOGIN);
   const { finalTheme } = FinalTheme.useContainer();
   const { register, handleSubmit } = useForm();
   const { signUp } = useParams();
@@ -25,11 +28,16 @@ function Auth() {
       if (_signUp) {
         history.push("/editProfile", { ...data, new: true });
       } else {
-        setToken("terter");
+        login(data).then(({ data, error }) => {
+          if (data.login) {
+            setToken(data.login.token);
+            history.replace("/");
+          }
+        });
         console.log(data);
       }
     },
-    [history, _signUp]
+    [history, _signUp, login]
   );
   console.log(token);
   return (
@@ -43,19 +51,21 @@ function Auth() {
           color={finalTheme ? "secondary" : "primary"}
           autoFocus
           {...register(_signUp ? "name" : "userName")}
-          label={_signUp ? "Full Name" : "Username"}
+          label={_signUp ? "Full Name" : "Username or email"}
           variant="outlined"
           helperText={_signUp ? "Enter your full name" : ""}
         />
-        {!_signUp && <p>or</p>}
-        <TextField
-          className="input"
-          {...register("email")}
-          required={_signUp ? true : false}
-          color={finalTheme ? "secondary" : "primary"}
-          label="Email"
-          variant="outlined"
-        />
+
+        {_signUp && (
+          <TextField
+            className="input"
+            {...register("email")}
+            required={_signUp ? true : false}
+            color={finalTheme ? "secondary" : "primary"}
+            label="Email"
+            variant="outlined"
+          />
+        )}
         <TextField
           className="input"
           {...register("password")}
@@ -82,6 +92,7 @@ function Auth() {
           variant="contained"
           color={finalTheme ? "secondary" : "primary"}
           size="large"
+          disabled={loginResult.fetching}
         >
           {_signUp ? "Sign Up" : "LogIn"}
         </Button>

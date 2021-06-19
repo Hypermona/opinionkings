@@ -3,8 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { useMutation } from "urql";
-import IconButton from "@material-ui/core/IconButton";
-import { useParams, Link, useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { useForm } from "react-hook-form";
 import FinalTheme from "../../Store/finalTheme";
@@ -37,21 +36,21 @@ function EditProfile() {
       new: state.new,
     };
     console.log("variables", variables);
-    // if (state.new) {
-    //   try {
-    //     const { data, error } = await signUp(variables);
-    //     console.log(data, error);
-    //     if (data.addUser !== null) {
-    //       console.log(data.addUser.token);
-    //       setToken(data.addUser.token);
-    //       replace("/");
-    //     } else if (error) {
-    //       console.log(error);
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
+    if (state.new) {
+      try {
+        const { data, error } = await signUp(variables);
+        console.log(data, error);
+        if (data.addUser !== null) {
+          console.log(data.addUser.token);
+          setToken(data.addUser.token);
+          replace("/");
+        } else if (error) {
+          console.log(error);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
