@@ -30,8 +30,11 @@ function Auth() {
       } else {
         login(data).then(({ data, error }) => {
           if (data.login) {
-            setToken(data.login.token, data.login.token);
-            history.replace("/");
+            setToken(data.login.token, data.login.id);
+            window.location = "/";
+          }
+          if (error) {
+            console.log(error);
           }
         });
         console.log(data);
