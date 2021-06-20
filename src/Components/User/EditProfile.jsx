@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { useMutation } from "urql";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { useForm } from "react-hook-form";
 import FinalTheme from "../../Store/finalTheme";
@@ -26,7 +26,6 @@ function EditProfile() {
     },
   });
 
-  const { replace } = useHistory();
   console.log(useLocation());
   const onSubmit = async (signUpData) => {
     const variables = {
@@ -43,7 +42,7 @@ function EditProfile() {
         if (data.addUser !== null) {
           console.log(data.addUser.token);
           setToken(data.addUser.token, data.login.id);
-          window.location = "/";
+          window.location.replace("/");
         } else if (error) {
           console.log(error);
         }

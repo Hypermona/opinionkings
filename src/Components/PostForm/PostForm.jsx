@@ -7,22 +7,33 @@ import FinalTheme from "../../Store/finalTheme";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import "./postForm.css";
 import PostImageModal from "../../Common/PostImageModal";
+import { useMutation } from "urql";
+import { ADD_POST } from "../../Queries/Post";
+
+const handleTags = (tags) => {
+  let tagArray = tags
+    .split(",")
+    .map((e) => e.trim())
+    .filter((i) => i);
+
+  return tagArray;
+};
 
 function PostForm() {
   const [previewImg, setPreviewImg] = React.useState(null);
   const { finalTheme } = FinalTheme.useContainer();
   const { register, handleSubmit } = useForm();
+  const [addPostResult, addPost] = useMutation(ADD_POST);
 
-  const onSubmit = (data) => {
-    console.log("form data", data);
-
-    // const reader = new FileReader();
-    // reader.readAsDataURL(data.image[0]);
-    // reader.onloadend = () => {
-    //   setPreview(reader.result);
-    // };
+  const onSubmit = async (formData) => {
+    const tags = formData.tags;
+    const separatedTags = handleTags(tags);
+    const variables = { ...formData, tags: separatedTags, image: previewImg };
+    const { data, error } = await addPost(variables);
+    console.log(data, error);
+    console.log("form data", variables);
   };
-  // console.log(preview);
+
   console.log("form");
   return (
     <div className="edit-post">
@@ -74,8 +85,14 @@ function PostForm() {
             color={finalTheme ? "secondary" : "primary"}
             label="tags"
             {...register("tags")}
+            helperText="Use , (comma) to separate tags"
           />
-          <Button color={finalTheme ? "secondary" : "primary"} variant="contained" type="submit">
+          <Button
+            color={finalTheme ? "secondary" : "primary"}
+            variant="contained"
+            type="submit"
+            disabled={addPostResult.fetching}
+          >
             Submit
           </Button>
         </div>

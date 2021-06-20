@@ -19,7 +19,7 @@ import Brightness4Icon from "@material-ui/icons/Brightness4";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import Theme from "../../Store/theme";
-import { getToken } from "../../Store/token";
+import { deleteToken, getToken } from "../../Store/token";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -112,7 +112,10 @@ export default function Header() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
+  const handleLogOut = () => {
+    deleteToken();
+    window.location.replace("/");
+  };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -126,6 +129,7 @@ export default function Header() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
     </Menu>
   );
 

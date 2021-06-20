@@ -8,14 +8,15 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Users from "../../Store/users";
 import "./postHead.css";
-import { USERS } from "../../data";
 
-function PostHead({ userId, dateAndTime }) {
+// import { USERS } from "../../data";
+
+function PostHead({ user, dateAndTime }) {
   const { users, setUsers } = Users.useContainer();
-  React.useEffect(() => {
-    setUsers(USERS);
-  }, [setUsers]);
-  const user = users.filter((u) => u.userName === userId)[0];
+  // React.useEffect(() => {
+  //   setUsers(USERS);
+  // }, [setUsers]);
+  // const user = users.filter((u) => u.userName === userId)[0];
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
@@ -38,7 +39,7 @@ function PostHead({ userId, dateAndTime }) {
     <>
       {user && (
         <div className="header-container">
-          <Avatar src={user.profilePic} alt={user.userName} />
+          <Avatar src={user.image} alt={user.userName} />
           <div className="head-about">
             <p className="name">
               {user.name}

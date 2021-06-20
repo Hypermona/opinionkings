@@ -31,7 +31,7 @@ function Auth() {
         login(data).then(({ data, error }) => {
           if (data.login) {
             setToken(data.login.token, data.login.id);
-            window.location = "/";
+            window.location.replace("/");
           }
           if (error) {
             console.log(error);

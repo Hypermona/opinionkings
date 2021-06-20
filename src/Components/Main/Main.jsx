@@ -3,9 +3,16 @@ import Body from "../Body/Body";
 import Header from "../Header/Header";
 import { BrowserRouter as Router } from "react-router-dom";
 import { createClient, Provider } from "urql";
+import { getToken } from "../../Store/token";
 
 const client = createClient({
   url: "http://localhost:4000/",
+  fetchOptions: () => {
+    const token = getToken();
+    return {
+      headers: { Authorization: token ? `Bearer ${token}` : "" },
+    };
+  },
 });
 
 function Main() {

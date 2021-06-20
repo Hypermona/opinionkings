@@ -1,6 +1,6 @@
 const ADD_POST = `
 mutation($title:String,$image:String,$shortDescription:String,$description:String,$tags:[String],$authorId:ID){
-    addPost(title:$title,image:$image,shortDescription:$shortDescrition,description:$description,tags:$tags,authorId:$authorId){
+    addPost(title:$title,image:$image,shortDescription:$shortDescription,description:$description,tags:$tags,authorId:$authorId){
         id
     }
 }
@@ -37,14 +37,14 @@ query {
         image
         shortDescription
         description
-        like
-        dislike
+        likes
+        dislikes
         shares
         saves
         createdAt
         author{
             id
-            username
+            userName
             name
             verified
             image
