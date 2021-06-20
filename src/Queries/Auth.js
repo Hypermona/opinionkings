@@ -7,8 +7,8 @@ mutation($email:String,$userName:String,$password:String){
 }
 `;
 const SIGNUP = `
-mutation($email:String,$userName:String,$password:String,$new:Boolean,$image:String){
-    addUser(email:$email,userName:$userName,password:$password,new:$new,image:$image){
+mutation($email:String,$userName:String,$password:String,$new:Boolean,$image:String,$name:String){
+    addUser(email:$email,userName:$userName,password:$password,new:$new,image:$image,name:$name){
         id
         token
     }
