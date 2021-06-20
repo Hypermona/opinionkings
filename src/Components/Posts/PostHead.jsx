@@ -6,13 +6,13 @@ import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import Users from "../../Store/users";
+// import Users from "../../Store/users";
 import "./postHead.css";
 
 // import { USERS } from "../../data";
 
 function PostHead({ user, dateAndTime }) {
-  const { users, setUsers } = Users.useContainer();
+  // const { users, setUsers } = Users.useContainer();
   // React.useEffect(() => {
   //   setUsers(USERS);
   // }, [setUsers]);
@@ -33,8 +33,9 @@ function PostHead({ user, dateAndTime }) {
     hour: "numeric",
     minuite: "numeric",
   };
-  console.log(dateAndTime);
-  const _dateAndTime = new Date(dateAndTime).toLocaleDateString(undefined, options);
+
+  const _dateAndTime = new Date(Number(dateAndTime)).toLocaleDateString(undefined, options);
+  console.log("date", new Date(dateAndTime));
   return (
     <>
       {user && (
