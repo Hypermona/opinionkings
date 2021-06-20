@@ -6,7 +6,7 @@ import PostImage from "./PostImage";
 import Paper from "@material-ui/core/Paper";
 import "./post.css";
 import Posts from "../../Store/posts";
-import { POSTS } from "../../data";
+// import { POSTS } from "../../data";
 import { useQuery } from "urql";
 import { GET_POSTS } from "../../Queries/Post";
 

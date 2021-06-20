@@ -9,6 +9,7 @@ import "./postForm.css";
 import PostImageModal from "../../Common/PostImageModal";
 import { useMutation } from "urql";
 import { ADD_POST } from "../../Queries/Post";
+import { useHistory } from "react-router";
 
 const handleTags = (tags) => {
   let tagArray = tags
@@ -24,14 +25,17 @@ function PostForm() {
   const { finalTheme } = FinalTheme.useContainer();
   const { register, handleSubmit } = useForm();
   const [addPostResult, addPost] = useMutation(ADD_POST);
-
+  const { replace } = useHistory();
   const onSubmit = async (formData) => {
     const tags = formData.tags;
     const separatedTags = handleTags(tags);
     const variables = { ...formData, tags: separatedTags, image: previewImg };
     const { data, error } = await addPost(variables);
-    console.log(data, error);
-    console.log("form data", variables);
+    if (data.addPost) {
+      replace("/");
+    }
+    // console.log(data, error);
+    // console.log("form data", variables);
   };
 
   console.log("form");
