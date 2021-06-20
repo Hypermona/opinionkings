@@ -22,7 +22,7 @@
 .image {
   grid-area: image;
   margin: auto;
-  width: 300px;
+  width: 350px;
   height: 300px;
 }
 @media only screen and (max-width: 600px) {

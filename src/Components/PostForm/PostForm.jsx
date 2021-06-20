@@ -34,6 +34,9 @@ function PostForm() {
     if (data.addPost) {
       replace("/");
     }
+    if (error) {
+      console.log(error);
+    }
     // console.log(data, error);
     // console.log("form data", variables);
   };

@@ -1,7 +1,7 @@
 .body-container {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: 0.8fr 2fr 0.9fr;
+  grid-template-columns: 0.6fr 2fr 0.8fr;
   grid-template-rows: 100vh;
   grid-template-areas: "category posts explore";
 }
