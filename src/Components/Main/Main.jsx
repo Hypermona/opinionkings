@@ -6,11 +6,13 @@ import { createClient, Provider } from "urql";
 import { getToken } from "../../Store/token";
 
 const client = createClient({
-  url: "http://localhost:4000/",
+  url: "http://ec2-13-233-96-11.ap-south-1.compute.amazonaws.com:4000/",
   fetchOptions: () => {
     const token = getToken();
     return {
-      headers: { Authorization: token ? `Bearer ${token}` : "" },
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
     };
   },
 });
