@@ -5,8 +5,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { createClient, Provider } from "urql";
 import { getToken } from "../../Store/token";
 
+const url = "http://localhost:4000/";
+// const url=process.env.REACT_APP_API_END_POINT
+
 const client = createClient({
-  url: process.env.REACT_APP_API_END_POINT,
+  url: url,
   fetchOptions: () => {
     const token = getToken();
     return {
