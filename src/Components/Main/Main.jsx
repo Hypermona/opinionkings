@@ -6,7 +6,7 @@ import { createClient, Provider } from "urql";
 import { getToken } from "../../Store/token";
 
 const client = createClient({
-  url: "http://ec2-3-108-82-42.ap-south-1.compute.amazonaws.com:4000/",
+  url: process.env.REACT_APP_API_END_POINT,
   fetchOptions: () => {
     const token = getToken();
     return {
