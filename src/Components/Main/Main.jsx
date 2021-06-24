@@ -6,7 +6,7 @@ import { createClient, Provider } from "urql";
 import { getToken } from "../../Store/token";
 
 const client = createClient({
-  url: "https://ec2-3-108-82-42.ap-south-1.compute.amazonaws.com/",
+  url: "http://ec2-3-108-82-42.ap-south-1.compute.amazonaws.com:4000/",
   fetchOptions: () => {
     const token = getToken();
     return {
