@@ -48,27 +48,27 @@ function Auth() {
       <div className="signup">
         <p className="title">{_signUp ? "SignUP" : "LogIn"}</p>
 
-        <TextField
-          className="input"
-          required={_signUp ? true : false}
-          color={finalTheme ? "secondary" : "primary"}
-          autoFocus
-          {...register(_signUp ? "name" : "userName")}
-          label={_signUp ? "Full Name" : "Username or email"}
-          variant="outlined"
-          helperText={_signUp ? "Enter your full name" : ""}
-        />
-
         {_signUp && (
           <TextField
             className="input"
-            {...register("email")}
             required={_signUp ? true : false}
             color={finalTheme ? "secondary" : "primary"}
-            label="Email"
+            autoFocus
+            {...register(_signUp ? "name" : "userName")}
+            label={_signUp ? "Full Name" : "Username or email"}
             variant="outlined"
+            helperText={_signUp ? "Enter your full name" : ""}
           />
         )}
+        <TextField
+          className="input"
+          {...register("email")}
+          required={_signUp ? true : false}
+          color={finalTheme ? "secondary" : "primary"}
+          label="Email"
+          variant="outlined"
+        />
+
         <TextField
           className="input"
           {...register("password")}

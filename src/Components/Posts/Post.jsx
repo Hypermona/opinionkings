@@ -10,6 +10,7 @@ import Posts from "../../Store/posts";
 import { useQuery } from "urql";
 import { GET_POSTS } from "../../Queries/Post";
 import Error from "../Errors/Error";
+import Loading from "../Loading/Loading";
 
 function Post() {
   const _Posts = Posts.useContainer();
@@ -22,8 +23,9 @@ function Post() {
   console.log(result);
   return (
     <>
-      {!posts.fetching &&
-        posts.data &&
+      {posts.fetching && <Loading />}
+      {posts.data &&
+        posts.data.posts &&
         posts.data.posts.map((post, i) => (
           <Paper className="post-container" key={i} elevation={0}>
             <div className="header">
