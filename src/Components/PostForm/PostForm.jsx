@@ -26,6 +26,7 @@ function PostForm() {
   const { register, handleSubmit } = useForm();
   const [addPostResult, addPost] = useMutation(ADD_POST);
   const { replace } = useHistory();
+
   const onSubmit = async (formData) => {
     const tags = formData.tags;
     const separatedTags = handleTags(tags);

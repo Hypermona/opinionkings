@@ -114,7 +114,7 @@ function EditProfile() {
           <Button
             type="submit"
             className="button"
-            disabled={token | signUpResult.fetching}
+            disabled={token && true | signUpResult.fetching}
             size="large"
             color={finalTheme ? "secondary" : "primary"}
             variant="contained"

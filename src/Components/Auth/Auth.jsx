@@ -23,25 +23,24 @@ function Auth() {
   const _signUp = signUp === "true" ? true : false;
   const [visibility, setVisibility] = useState(false);
 
-  const onSubmit = useCallback(
-    async (data) => {
-      if (_signUp) {
-        history.push("/editProfile", { ...data, new: true });
-      } else {
-        login(data).then(({ data, error }) => {
-          if (data.login) {
-            setToken(data.login.token, data.login.id);
-            window.location.replace("/");
-          }
-          if (error) {
-            console.log(error);
-          }
-        });
-        console.log(data);
-      }
-    },
-    [history, _signUp, login]
-  );
+  const onSubmit = async (data) => {
+    console.log(data);
+    if (_signUp) {
+      history.push("/editProfile", { ...data, new: true });
+    } else {
+      login(data).then(({ data, error }) => {
+        if (data.login) {
+          setToken(data.login.token, data.login.id);
+          window.location.replace("/");
+        }
+        if (error) {
+          console.log(error);
+        }
+      });
+      console.log(data);
+    }
+  };
+
   console.log(token);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -57,7 +56,7 @@ function Auth() {
             {...register(_signUp ? "name" : "userName")}
             label={_signUp ? "Full Name" : "Username or email"}
             variant="outlined"
-            helperText={_signUp ? "Enter your full name" : ""}
+            helperText="Enter your full name"
           />
         )}
         <TextField
@@ -65,7 +64,7 @@ function Auth() {
           {...register("email")}
           required={_signUp ? true : false}
           color={finalTheme ? "secondary" : "primary"}
-          label="Email"
+          label={_signUp ? "Email" : "Username or email"}
           variant="outlined"
         />
 
