@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
 import Slider from "@material-ui/core/Slider";
-import getCroppedImage from "../Functions/cropImage";
+import getCroppedImage from "../../Functions/cropImage";
 import "./postImage.css";
 import { Button } from "@material-ui/core";
-import { paper } from "../Custom/Customization";
-import FinalTheme from "../Store/finalTheme";
+import { paper } from "../../Custom/Customization";
+import FinalTheme from "../../Store/finalTheme";
 
 function PostImage({ closeModal, image, setPreviewImg, cropShape }) {
   const { finalTheme } = FinalTheme.useContainer();

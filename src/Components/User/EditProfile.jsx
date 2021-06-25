@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import { useForm } from "react-hook-form";
 import FinalTheme from "../../Store/finalTheme";
 import { setToken, getToken } from "../../Store/token";
-import PostImageModal from "../../Common/PostImageModal";
+import PostImageModal from "../Common/PostImageModal";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { SIGNUP } from "../../Queries/Auth";
 import "./editProfile.css";

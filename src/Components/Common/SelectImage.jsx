@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import PostImage from "./PostImage";
 import TextField from "@material-ui/core/TextField";
-import FinalTheme from "../Store/finalTheme";
+import FinalTheme from "../../Store/finalTheme";
 import Paper from "@material-ui/core/Paper";
 import Fab from "@material-ui/core/Fab";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 
-import { primary, secondary } from "../Custom/Customization";
+import { primary, secondary } from "../../Custom/Customization";
 
 import "./selectImage.css";
 

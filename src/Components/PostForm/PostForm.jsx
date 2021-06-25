@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import FinalTheme from "../../Store/finalTheme";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import "./postForm.css";
-import PostImageModal from "../../Common/PostImageModal";
+import PostImageModal from "../Common/PostImageModal";
 import { useMutation } from "urql";
 import { ADD_POST } from "../../Queries/Post";
 import { useHistory } from "react-router";
