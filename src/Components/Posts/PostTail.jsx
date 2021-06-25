@@ -4,6 +4,9 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import NearMeIcon from "@material-ui/icons/NearMe";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import IconButton from "@material-ui/core/IconButton";
+import PanToolIcon from "@material-ui/icons/PanTool";
+import PanToolRoundedIcon from "@material-ui/icons/PanToolRounded";
+import PanToolOutlinedIcon from "@material-ui/icons/PanToolOutlined";
 import "./postTail.css";
 
 function PostTail() {
@@ -11,7 +14,7 @@ function PostTail() {
     <div className="tail-container">
       <div>
         <IconButton>
-          <FavoriteBorderIcon />
+          <PanToolOutlinedIcon />
         </IconButton>
         <IconButton>
           <QuestionAnswerIcon />
