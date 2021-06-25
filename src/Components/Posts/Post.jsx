@@ -19,7 +19,7 @@ function Post() {
   React.useEffect(() => {
     setPosts(result); // {data:{posts:{ your actual data}},fetching:Boolean, error:{Object}}
   }, [setPosts, result]);
-  // console.log(result);
+  console.log(result);
   return (
     <>
       {!posts.fetching &&
