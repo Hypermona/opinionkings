@@ -38,8 +38,8 @@ function PostForm() {
     if (error) {
       console.log(error);
     }
-    // console.log(data, error);
-    // console.log("form data", variables);
+    console.log(data, error);
+    console.log("form data", variables);
   };
 
   console.log("form");
