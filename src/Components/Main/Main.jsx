@@ -17,10 +17,10 @@ const client = createClient({
     return {
       headers: {
         Authorization: token ? `Bearer ${token}` : "",
-        exchanges: [devtoolsExchange, dedupExchange, cacheExchange({}), fetchExchange],
       },
     };
   },
+  exchanges: [devtoolsExchange, dedupExchange, cacheExchange({}), fetchExchange],
 });
 
 function Main() {
