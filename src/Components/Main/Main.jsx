@@ -2,7 +2,8 @@ import React from "react";
 import Body from "../Body/Body";
 import Header from "../Header/Header";
 import { BrowserRouter as Router } from "react-router-dom";
-import { createClient, Provider } from "urql";
+import { createClient, Provider, dedupExchange, fetchExchange } from "urql";
+import { cacheExchange } from "@urql/exchange-graphcache";
 import { getToken } from "../../Store/token";
 
 const url = "http://localhost:4000/";
@@ -15,6 +16,7 @@ const client = createClient({
     return {
       headers: {
         Authorization: token ? `Bearer ${token}` : "",
+        exchanges: [dedupExchange, cacheExchange({}), fetchExchange],
       },
     };
   },
