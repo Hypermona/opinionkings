@@ -9,6 +9,7 @@ import Posts from "../../Store/posts";
 // import { POSTS } from "../../data";
 import { useQuery } from "urql";
 import { GET_POSTS } from "../../Queries/Post";
+import errorSvg from "../../Images/error.svg";
 
 function Post() {
   const _Posts = Posts.useContainer();
@@ -18,10 +19,11 @@ function Post() {
   React.useEffect(() => {
     setPosts(result); // {data:{posts:{ your actual data}},fetching:Boolean, error:{Object}}
   }, [setPosts, result]);
-  console.log(result);
+  // console.log(result);
   return (
     <>
       {!posts.fetching &&
+        posts.data &&
         posts.data.posts.map((post, i) => (
           <Paper className="post-container" key={i} elevation={0}>
             <div className="header">
@@ -40,6 +42,14 @@ function Post() {
             )}
           </Paper>
         ))}
+      {posts.error && (
+        <div className="error">
+          <p align="center">
+            Something Went Wrong <a href="#">repost here</a> or refersh the page
+          </p>
+          <img src={errorSvg} alt="something went wrong | error" width="50%" />
+        </div>
+      )}
     </>
   );
 }

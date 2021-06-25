@@ -25,6 +25,13 @@
   width: 350px;
   height: 300px;
 }
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 70vh;
+  justify-content: center;
+}
 @media only screen and (max-width: 600px) {
   .post-container {
     grid-template-rows: auto auto auto;
