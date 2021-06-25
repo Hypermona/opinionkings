@@ -50,9 +50,9 @@ function Auth() {
         {_signUp && (
           <TextField
             className="input"
+            type="text"
             required={_signUp ? true : false}
             color={finalTheme ? "secondary" : "primary"}
-            autoFocus
             {...register(_signUp ? "name" : "userName")}
             label={_signUp ? "Full Name" : "Username or email"}
             variant="outlined"
