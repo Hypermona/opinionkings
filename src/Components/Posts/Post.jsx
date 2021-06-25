@@ -9,7 +9,7 @@ import Posts from "../../Store/posts";
 // import { POSTS } from "../../data";
 import { useQuery } from "urql";
 import { GET_POSTS } from "../../Queries/Post";
-import errorSvg from "../../Images/error.svg";
+import Error from "../Errors/Error";
 
 function Post() {
   const _Posts = Posts.useContainer();
@@ -42,14 +42,7 @@ function Post() {
             )}
           </Paper>
         ))}
-      {posts.error && (
-        <div className="error">
-          <p align="center">
-            Something Went Wrong <a href="#">repost here</a> or refersh the page
-          </p>
-          <img src={errorSvg} alt="something went wrong | error" width="50%" />
-        </div>
-      )}
+      {posts.error && <Error type="404" />}
     </>
   );
 }
