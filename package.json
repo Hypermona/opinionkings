@@ -5,6 +5,7 @@
   "dependencies": {
     "@cloudinary/base": "^1.0.0-beta.3",
     "@cloudinary/react": "^1.0.0-beta.8",
+    "@hookform/resolvers": "^2.6.0",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.5.1",
@@ -15,6 +16,7 @@
     "@urql/exchange-graphcache": "^4.1.4",
     "axios": "^0.21.1",
     "graphql": "^15.5.0",
+    "joi": "^17.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-easy-crop": "^3.5.1",

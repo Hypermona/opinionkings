@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
@@ -11,13 +11,21 @@ import FinalTheme from "../../Store/finalTheme";
 import { LOGIN } from "../../Queries/Auth";
 import { useMutation } from "urql";
 import { getToken, setToken } from "../../Store/token";
+import { authScheme } from "../../Functions/Validator";
+import { joiResolver } from "@hookform/resolvers/joi";
 import "./auth.css";
 
 function Auth() {
   const token = getToken();
   const [loginResult, login] = useMutation(LOGIN);
   const { finalTheme } = FinalTheme.useContainer();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: joiResolver(authScheme),
+  });
   const { signUp } = useParams();
   const history = useHistory();
   const _signUp = signUp === "true" ? true : false;
@@ -41,7 +49,7 @@ function Auth() {
     }
   };
 
-  console.log(token);
+  console.log(errors);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="signup">
@@ -56,7 +64,14 @@ function Auth() {
             {...register(_signUp ? "name" : "userName")}
             label={_signUp ? "Full Name" : "Username or email"}
             variant="outlined"
-            helperText="Enter your full name"
+            error={errors.name || errors.userName}
+            helperText={
+              errors.userName
+                ? errors.userName.message
+                : errors.name
+                ? errors.name.message
+                : "Enter your full name"
+            }
           />
         )}
         <TextField
@@ -66,6 +81,8 @@ function Auth() {
           color={finalTheme ? "secondary" : "primary"}
           label={_signUp ? "Email" : "Username or email"}
           variant="outlined"
+          error={errors.email}
+          helperText={errors.email ? errors.email.message : ""}
         />
 
         <TextField
@@ -85,7 +102,14 @@ function Auth() {
               </InputAdornment>
             ),
           }}
-          helperText={_signUp ? "use numbers, letters and special charecters" : ""}
+          error={errors.password}
+          helperText={
+            errors.password
+              ? errors.password.message
+              : _signUp
+              ? "use numbers, letters and special charecters"
+              : ""
+          }
         />
 
         <Button
