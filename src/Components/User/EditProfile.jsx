@@ -5,7 +5,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { useMutation, useQuery } from "urql";
 import { useLocation } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm, useWatch, Controller } from "react-hook-form";
 import FinalTheme from "../../Store/finalTheme";
 import { setToken, getToken } from "../../Store/token";
 import PostImageModal from "../Common/PostImageModal";
@@ -22,18 +22,28 @@ import green from "@material-ui/core/colors/green";
 import { CHECK_USER } from "../../Queries/User";
 import "./editProfile.css";
 
-const CheckUsername = ({ userName, word }) => {
+const CheckUsername = ({ userName, word, setError, useMemo, clearErrors, errorUerName }) => {
+  const { fetching, data } = userName;
+  useMemo(() => {
+    if (data && data.checkUser.user) {
+      setError("userName", {
+        type: "userName",
+        message: "username " + word + " exists already",
+      });
+    } else {
+      clearErrors(["userName"]);
+    }
+  }, [data, setError, word, clearErrors]);
   if (word) {
-    const { fetching, data } = userName;
     console.log("UserName", userName);
     return (
       <InputAdornment>
         {fetching ? (
           <CircularProgress size={20} color="inherit" />
-        ) : data.checkUser.user ? (
-          <CancelIcon style={{ color: red[400] }} />
-        ) : (
+        ) : !data.checkUser.user && !!!errorUerName ? (
           <CheckCircleIcon style={{ color: green[400] }} />
+        ) : (
+          <CancelIcon style={{ color: red[400] }} />
         )}
       </InputAdornment>
     );
@@ -57,16 +67,17 @@ function EditProfile() {
 
   const { state } = useLocation();
   const {
-    register,
     handleSubmit,
     control,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm({
     defaultValues: useMemo(
       () => ({
         name: state.name,
         email: state.email,
+        bio: "",
       }),
       [state]
     ),
@@ -91,7 +102,9 @@ function EditProfile() {
           setToken(data.addUser.token, data.addUser.id);
           window.location.replace("/");
         } else if (error) {
-          setError("email", { type: "email", message: "email exists already" });
+          const message = error.graphQLErrors[0].message;
+          const type = message.split(" ")[0];
+          setError(type, { type: type, message: message });
         }
       } catch (error) {
         console.log(error);
@@ -101,21 +114,22 @@ function EditProfile() {
   const formWatch = useWatch({
     control,
     name: ["userName", "bio"],
-    defaultValue: "",
   });
 
-  const [userNameResult, queryUserName] = useQuery({
+  const [userNameResult] = useQuery({
     query: CHECK_USER,
     variables: { userName: formWatch[0] },
   });
-  useEffect(() => {
-    if (userNameResult.data && userNameResult.data.checkUser.user) {
-      setError("userName", {
-        type: "userName",
-        message: "username " + formWatch[0] + " exists already",
-      });
-    }
-  }, [userNameResult.data, formWatch, setError]);
+  // useEffect(() => {
+  //   if (userNameResult.data && userNameResult.data.checkUser.user) {
+  //     setError("userName", {
+  //       type: "userName",
+  //       message: "username " + formWatch[0] + " exists already",
+  //     });
+  //   } else {
+  //     clearErrors(["userName"]);
+  //   }
+  // }, [userNameResult.data, formWatch, setError, clearErrors]);
   console.log(formWatch);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -126,65 +140,107 @@ function EditProfile() {
           cropShape="round"
           previewImg={previewImg}
         />
-        <TextField
-          className="input"
-          label="Full Name"
-          variant="outlined"
-          error={!!errors.name}
-          key="name"
-          color={finalTheme ? "secondary" : "primary"}
-          helperText={errors.name ? errors.name.message : ""}
-          {...register("name")}
-        />
-        <TextField
-          className="input"
-          label="Bio"
-          variant="outlined"
-          error={!!errors.bio}
-          color={finalTheme ? "secondary" : "primary"}
-          {...register("bio")}
-          helperText={errors.bio ? errors.bio.message : ""}
-          InputProps={{
-            endAdornment: <ShowCharCount word={formWatch[1]} />,
-          }}
-        />
-        <TextField
-          className="input"
-          label="Username"
-          focused
-          variant="outlined"
-          color={finalTheme ? "secondary" : "primary"}
-          {...register("userName")}
-          InputProps={{
-            endAdornment: <CheckUsername userName={userNameResult} word={formWatch[0]} />,
-          }}
-          error={errors.userName}
-          helperText={errors.userName ? errors.userName.message : ""}
-        />
-        <TextField
-          className="input"
-          label="Email"
-          variant="outlined"
-          key="email"
-          color={finalTheme ? "secondary" : "primary"}
-          {...register("email")}
-          error={!!errors.email}
-          helperText={errors.email ? errors.email.message : ""}
-        />
-        <FormControlLabel
-          className="input"
-          control={
-            <Checkbox
-              // checked={checked}
-              // onChange={handleChange}
-              value="Hekko"
+        <Controller
+          name="name"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              className="input"
+              label="Full Name"
+              variant="outlined"
+              error={errors.name}
               color={finalTheme ? "secondary" : "primary"}
-              inputProps={{ "aria-label": "primary checkbox" }}
-              // {...register("termsAndPrivacy")}
+              helperText={errors.name ? errors.name.message : ""}
             />
-          }
-          label="Accepted terms and condithons and privacy police"
+          )}
         />
+
+        <Controller
+          name="bio"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              className="input"
+              label="Bio"
+              variant="outlined"
+              error={!!errors.bio}
+              color={finalTheme ? "secondary" : "primary"}
+              helperText={errors.bio ? errors.bio.message : ""}
+              InputProps={{
+                endAdornment: <ShowCharCount word={formWatch[1]} />,
+              }}
+            />
+          )}
+          rules={{ required: false }}
+        />
+
+        <Controller
+          name="userName"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              className="input"
+              label="Username"
+              variant="outlined"
+              color={finalTheme ? "secondary" : "primary"}
+              InputProps={{
+                endAdornment: (
+                  <CheckUsername
+                    userName={userNameResult}
+                    word={formWatch[0]}
+                    setError={setError}
+                    useMemo={useMemo}
+                    clearErrors={clearErrors}
+                    errorUerName={errors.userName}
+                  />
+                ),
+              }}
+              rules={{ required: true }}
+              error={errors.userName}
+              helperText={errors.userName ? errors.userName.message : ""}
+            />
+          )}
+        />
+
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              className="input"
+              label="Email"
+              variant="outlined"
+              color={finalTheme ? "secondary" : "primary"}
+              error={!!errors.email}
+              helperText={errors.email ? errors.email.message : ""}
+            />
+          )}
+        />
+
+        {/* <Controller
+          name="termsAndPrivacy"
+          control={control}
+          render={({ field }) => (
+            <FormControlLabel
+              {...field}
+              className="input"
+              control={
+                <Checkbox
+                  // checked={checked}
+                  // onChange={handleChange}
+                  value="Hekko"
+                  color={finalTheme ? "secondary" : "primary"}
+                  inputProps={{ "aria-label": "primary checkbox" }}
+                />
+              }
+              label="Accepted terms and condithons and privacy police"
+            />
+          )}
+        /> */}
 
         <div className="buttons">
           {/* <Button className="button" color={finalTheme?"secondary":"primary"} >Back</Button> */}

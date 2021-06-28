@@ -4,8 +4,10 @@ const authScheme = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .required(),
-  bio: Joi.string().max(300),
-  userName: Joi.string().min(1).max(30),
+  bio: Joi.string().allow(null, "").max(300),
+  userName: Joi.string().min(1).max(30).pattern(new RegExp("^[a-zA-Z0-9_.]*$")).messages({
+    "string.pattern.base": `only _ and . (dot) special characters are allowed`,
+  }),
   password: Joi.string()
     .min(8)
     .max(30)
