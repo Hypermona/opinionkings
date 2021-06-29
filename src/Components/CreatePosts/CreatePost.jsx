@@ -4,19 +4,19 @@ import React from "react";
 import { useTheme } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { getUser } from "../../Store/token";
-import AuthModel from "../../Store/authModel";
+import AuthModal from "../../Store/authModal";
 
 function CreatePost() {
   const user = getUser();
   const { push } = useHistory();
-  const { setAuthModel } = AuthModel.useContainer();
+  const { setAuthModal } = AuthModal.useContainer();
   const theme = useTheme();
 
   const handleClick = () => {
     if (user) {
       push("/edit");
     } else {
-      setAuthModel(true);
+      setAuthModal(true);
     }
   };
   return (

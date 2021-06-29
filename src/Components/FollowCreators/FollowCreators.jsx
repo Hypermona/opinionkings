@@ -9,10 +9,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import { useTheme } from "@material-ui/core/styles";
-
+import Error from "../Errors/Error";
 import Typography from "@material-ui/core/Typography";
-import { USERS } from "../../data";
 import Users from "../../Store/users";
+import { useQuery } from "urql";
+import { GET_USERS } from "../../Queries/User";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,13 +26,13 @@ const useStyles = makeStyles((theme) => ({
 
 function FollowCreators() {
   const theme = useTheme();
-
+  const [usersResult] = useQuery({ query: GET_USERS });
   const classes = useStyles();
   const { users, setUsers } = Users.useContainer();
   React.useEffect(() => {
-    setUsers(USERS);
-  }, [setUsers]);
-  console.log("hello");
+    setUsers(usersResult);
+  }, [setUsers, usersResult]);
+  console.log(usersResult);
   return (
     <div>
       <div className="follow-creator" style={{ background: theme.palette.primary.main }}>
@@ -40,14 +41,16 @@ function FollowCreators() {
         </Typography>
       </div>
       <List className={classes.root} component="nav">
-        {users &&
-          users.map((u) => (
+        {users.fetching ? (
+          <div>Loading...</div>
+        ) : users.data ? (
+          users.data.users.map((u) => (
             <div key={u.userName}>
               <ListItem button>
                 <ListItemIcon>
-                  <Avatar src={u.profilePic} alt={u.name} />
+                  <Avatar src={u.image} alt={u.name} />
                 </ListItemIcon>
-                <ListItemText primary={u.name} secondary={u.userName} />
+                <ListItemText primary={u.name} secondary={"@" + u.userName} />
                 <Button
                   size="small"
                   variant="outlined"
@@ -58,7 +61,10 @@ function FollowCreators() {
               </ListItem>
               <Divider />
             </div>
-          ))}
+          ))
+        ) : (
+          <Error />
+        )}
       </List>
     </div>
   );

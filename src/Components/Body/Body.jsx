@@ -8,7 +8,7 @@ import { Switch, Route } from "react-router-dom";
 import "./body.css";
 import PostForm from "../PostForm/PostForm";
 import EditProfile from "../User/EditProfile";
-import AuthModel from "../Auth/AuthModel";
+import AuthModal from "../Auth/AuthModal";
 import AuthComp from "../Auth/AuthComp";
 
 function Body() {
@@ -39,7 +39,7 @@ function Body() {
           <EditProfile />
         </Route>
       </Switch>
-      <AuthModel />
+      <AuthModal />
     </div>
   );
 }

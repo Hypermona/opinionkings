@@ -3,7 +3,7 @@ import Modal from "@material-ui/core/Modal";
 import Fade from "@material-ui/core/Fade";
 import Backdrop from "@material-ui/core/Backdrop";
 import Auth from "./Auth";
-import AuthModelStore from "../../Store/authModel";
+import AuthModelStore from "../../Store/authModal";
 import { useHistory } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -33,9 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AuthModel() {
+function AuthModal() {
   const classes = useStyles();
-  const { authModel, setAuthModel } = AuthModelStore.useContainer();
+  const { authModal, setAuthModel } = AuthModelStore.useContainer();
   const { push } = useHistory();
   const handleClick = () => {
     setAuthModel(false);
@@ -43,7 +43,7 @@ function AuthModel() {
   };
   return (
     <Modal
-      open={authModel}
+      open={authModal}
       className={classes.modal}
       onClose={() => setAuthModel(false)}
       closeAfterTransition
@@ -52,7 +52,7 @@ function AuthModel() {
         timeout: 500,
       }}
     >
-      <Fade in={authModel}>
+      <Fade in={authModal}>
         <div className={classes.paper}>
           <Auth modal={true} />
           <p>
@@ -67,4 +67,4 @@ function AuthModel() {
   );
 }
 
-export default AuthModel;
+export default AuthModal;

@@ -5,4 +5,14 @@ query($userName:String){
  }
 }`;
 
-export { CHECK_USER };
+const GET_USERS = `
+query{
+    users{
+        image
+        name
+        userName
+    }
+}
+`;
+
+export { CHECK_USER, GET_USERS };
