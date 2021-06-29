@@ -8,6 +8,8 @@ import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
+import { useTheme } from "@material-ui/core/styles";
+
 import Typography from "@material-ui/core/Typography";
 import { USERS } from "../../data";
 import Users from "../../Store/users";
@@ -22,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function FollowCreators() {
+  const theme = useTheme();
+
   const classes = useStyles();
   const { users, setUsers } = Users.useContainer();
   React.useEffect(() => {
@@ -30,7 +34,7 @@ function FollowCreators() {
   console.log("hello");
   return (
     <div>
-      <div className="follow-creator">
+      <div className="follow-creator" style={{ background: theme.palette.primary.main }}>
         <Typography color="secondary" style={{ fontSize: "1.3rem", fontWeight: 600 }}>
           Follow Creators
         </Typography>

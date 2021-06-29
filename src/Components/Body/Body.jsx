@@ -7,8 +7,9 @@ import { Switch, Route } from "react-router-dom";
 
 import "./body.css";
 import PostForm from "../PostForm/PostForm";
-import Auth from "../Auth/Auth";
 import EditProfile from "../User/EditProfile";
+import AuthModel from "../Auth/AuthModel";
+import AuthComp from "../Auth/AuthComp";
 
 function Body() {
   return (
@@ -32,12 +33,13 @@ function Body() {
           <PostForm />
         </Route>
         <Route exact path="/auth/:signUp">
-          <Auth />
+          <AuthComp />
         </Route>
         <Route exact path="/editProfile">
           <EditProfile />
         </Route>
       </Switch>
+      <AuthModel />
     </div>
   );
 }

@@ -15,7 +15,7 @@ import { authScheme } from "../../Functions/Validator";
 import { joiResolver } from "@hookform/resolvers/joi";
 import "./auth.css";
 
-function Auth() {
+function Auth({ modal }) {
   const token = getToken();
   const [loginResult, login] = useMutation(LOGIN);
   const { finalTheme } = FinalTheme.useContainer();
@@ -123,7 +123,7 @@ function Auth() {
           {_signUp ? "Sign Up" : "LogIn"}
         </Button>
 
-        {_signUp ? (
+        {modal ? null : _signUp ? (
           <p>
             Already have account ? please <Link to="/auth/false">login</Link>
           </p>

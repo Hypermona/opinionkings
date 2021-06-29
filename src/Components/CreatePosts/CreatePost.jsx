@@ -2,13 +2,25 @@ import IconButton from "@material-ui/core/IconButton";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import React from "react";
 import { useTheme } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { getUser } from "../../Store/token";
+import AuthModel from "../../Store/authModel";
 
 function CreatePost() {
+  const user = getUser();
+  const { push } = useHistory();
+  const { setAuthModel } = AuthModel.useContainer();
   const theme = useTheme();
+
+  const handleClick = () => {
+    if (user) {
+      push("/edit");
+    } else {
+      setAuthModel(true);
+    }
+  };
   return (
-    <Link
-      to="/edit"
+    <div
       style={{
         textDecoration: "none",
         display: "flex",
@@ -21,6 +33,7 @@ function CreatePost() {
         cursor: "pointer",
         background: theme.palette.primary.main,
       }}
+      onClick={handleClick}
     >
       <IconButton>
         <AddBoxIcon color="secondary" fontSize="large" />
@@ -35,7 +48,7 @@ function CreatePost() {
       >
         Ask Opinion
       </p>
-    </Link>
+    </div>
   );
 }
 

@@ -4,6 +4,7 @@ import Theme from "./theme";
 import Posts from "./posts";
 import FinalTheme from "./finalTheme";
 import Users from "./users";
+import AuthModel from "./authModel";
 
 // const states = [Counter, Theme, Posts, FinalTheme, Users];
 // const Provider = (props) => {
@@ -19,11 +20,13 @@ import Users from "./users";
 const Provider = (props) => {
   return (
     <Users.Provider>
-      <Theme.Provider>
-        <Posts.Provider>
-          <FinalTheme.Provider>{props.children}</FinalTheme.Provider>
-        </Posts.Provider>
-      </Theme.Provider>
+      <AuthModel.Provider>
+        <Theme.Provider>
+          <Posts.Provider>
+            <FinalTheme.Provider>{props.children}</FinalTheme.Provider>
+          </Posts.Provider>
+        </Theme.Provider>
+      </AuthModel.Provider>
     </Users.Provider>
   );
 };
