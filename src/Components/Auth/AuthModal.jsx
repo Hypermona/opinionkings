@@ -35,17 +35,17 @@ const useStyles = makeStyles((theme) => ({
 
 function AuthModal() {
   const classes = useStyles();
-  const { authModal, setAuthModel } = AuthModelStore.useContainer();
+  const { authModal, handleClose } = AuthModelStore.useContainer();
   const { push } = useHistory();
   const handleClick = () => {
-    setAuthModel(false);
+    handleClose();
     push("/auth/true");
   };
   return (
     <Modal
       open={authModal}
       className={classes.modal}
-      onClose={() => setAuthModel(false)}
+      onClose={handleClose}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{

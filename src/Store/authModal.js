@@ -2,7 +2,11 @@ import { useState } from "react";
 import { createContainer } from "unstated-next";
 
 function AuthModal() {
-  let [authModal, setAuthModal] = useState(false);
-  return { authModal, setAuthModal };
+  const [authModal, setAuthModal] = useState(false);
+
+  const handleClose = () => setAuthModal(false);
+  const handleOpen = () => setAuthModal(true);
+
+  return { authModal, handleClose, handleOpen };
 }
 export default createContainer(AuthModal);

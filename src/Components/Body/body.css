@@ -11,6 +11,7 @@
 }
 .posts {
   grid-area: posts;
+  overflow: scroll;
   /* background-color: aliceblue; */
 }
 .explore {
@@ -25,10 +26,12 @@
 @media only screen and (max-width: 600px) {
   .body-container {
     grid-template-columns: 100vw;
-    grid-template-rows: auto auto 100vh;
+    grid-template-rows: auto auto;
     grid-template-areas:
       "category"
-      " posts"
-      " explore";
+      " posts";
+  }
+  .explore {
+    display: none;
   }
 }

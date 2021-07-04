@@ -24,6 +24,9 @@ import { deleteToken, getToken } from "../../Store/token";
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
+    top: 0,
+    position: "sticky",
+    zIndex: 2,
   },
   menuButton: {
     marginRight: theme.spacing(2),

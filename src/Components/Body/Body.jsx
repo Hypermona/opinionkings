@@ -1,10 +1,9 @@
 import React from "react";
 import Category from "../Category/Category";
-import CreatePost from "../CreatePosts/CreatePost";
+import CreatePostTab from "../CreatePosts/CreatePostTab";
 import FollowCreators from "../FollowCreators/FollowCreators";
 import Post from "../Posts/Post";
 import { Switch, Route } from "react-router-dom";
-
 import "./body.css";
 import PostForm from "../PostForm/PostForm";
 import EditProfile from "../User/EditProfile";
@@ -24,7 +23,7 @@ function Body() {
               <Post />
             </div>
             <div className="explore">
-              <CreatePost />
+              <CreatePostTab />
               <FollowCreators />
             </div>
           </div>
