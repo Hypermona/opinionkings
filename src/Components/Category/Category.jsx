@@ -1,7 +1,7 @@
 import React from "react";
 import Chip from "@material-ui/core/Chip";
 import { useQuery } from "urql";
-import "./category.css";
+import "./CSS/category.css";
 import CATEGORIES from "../../Queries/Category";
 
 function Category() {
