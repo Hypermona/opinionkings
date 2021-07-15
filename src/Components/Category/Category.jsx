@@ -27,12 +27,13 @@ function Category() {
   console.log("data", data);
   console.log("category", category);
   return (
-    <div className="category">
+    <div className="category-container">
       <Chip
         label={"Home"}
         className="chip rectangle"
         variant="default"
         clickable
+        component="div"
         color={category.id === "home" ? "secondary" : "primary"}
         style={{ margin: 5 }}
         onClick={() => handleClick1("home")}
@@ -42,6 +43,7 @@ function Category() {
         className="chip rectangle"
         variant="default"
         clickable
+        component="div"
         color={category.id === "trending" ? "secondary" : "primary"}
         style={{ margin: 5 }}
         onClick={() => handleClick1("trending")}
@@ -51,6 +53,7 @@ function Category() {
         className="chip rectangle"
         variant="default"
         clickable
+        component="div"
         color={category.id === "following" ? "secondary" : "primary"}
         style={{ margin: 5 }}
         onClick={() => handleClick1("following")}
@@ -62,6 +65,7 @@ function Category() {
             label={e.name}
             key={e.name}
             className="chip"
+            component="div"
             variant={category.id === e.id ? "default" : "outlined"}
             clickable
             style={{ margin: 5 }}
