@@ -20,7 +20,8 @@ function Category() {
     setCategory({ id: e });
     if (e === "home") {
       push(`/home`);
-    } else if (e === "following") {
+    } else if (e === "trending") {
+      push(`/home/trending`);
     }
   };
   const { data, fetching, error } = result;
