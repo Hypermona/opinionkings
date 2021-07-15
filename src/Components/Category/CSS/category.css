@@ -1,10 +1,11 @@
 .category-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin: 10px auto;
 }
 .chip {
-  margin: 5px auto;
+  margin: auto;
   min-width: 10rem;
   text-transform: capitalize;
 }
@@ -23,7 +24,6 @@
   }
   .chip {
     margin: 5px 2px;
-
     min-width: 6rem;
   }
 }
