@@ -9,23 +9,23 @@ mutation($title:String,$image:String,$shortDescription:String,$description:Strin
 const GET_POST = `
 query ($id:ID){
     post(id:$id){
-        id
+       id
         title
         image
         shortDescription
         description
-        like
-        dislike
+        likes
+        dislikes
         shares
         saves
         createdAt
         author{
             id
-            username
+            userName
             name
             verified
             image
-        }
+        } 
     }
 }
 `;

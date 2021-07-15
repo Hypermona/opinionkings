@@ -216,9 +216,12 @@ export default function Header() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Opinion Kings....
-          </Typography>
+          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+            <Typography className={classes.title} variant="h6" noWrap>
+              Opinion Kings....
+            </Typography>
+          </Link>
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

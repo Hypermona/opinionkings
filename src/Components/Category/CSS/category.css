@@ -6,6 +6,7 @@
 .chip {
   margin: 5px auto;
   min-width: 10rem;
+  text-transform: capitalize;
 }
 @media only screen and (max-width: 600px) {
   .category {

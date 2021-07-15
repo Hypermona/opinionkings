@@ -1,0 +1,13 @@
+.category-name {
+  margin-left: 10px;
+  margin-bottom: 0;
+  font-size: 1.5rem;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+.category-nopost {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}

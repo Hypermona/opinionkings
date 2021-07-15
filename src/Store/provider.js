@@ -1,5 +1,5 @@
 import React from "react";
-import Counter from "./counter";
+import Category from "./category";
 import Theme from "./theme";
 import Posts from "./posts";
 import FinalTheme from "./finalTheme";
@@ -23,7 +23,9 @@ const Provider = (props) => {
       <AuthModal.Provider>
         <Theme.Provider>
           <Posts.Provider>
-            <FinalTheme.Provider>{props.children}</FinalTheme.Provider>
+            <Category.Provider>
+              <FinalTheme.Provider>{props.children}</FinalTheme.Provider>
+            </Category.Provider>
           </Posts.Provider>
         </Theme.Provider>
       </AuthModal.Provider>

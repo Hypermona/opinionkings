@@ -2,25 +2,28 @@ import React from "react";
 import Category from "../Category/Category";
 import CreatePostTab from "../CreatePosts/CreatePostTab";
 import FollowCreators from "../FollowCreators/FollowCreators";
-import Post from "../Posts/Post";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import "./body.css";
 import PostForm from "../PostForm/PostForm";
 import EditProfile from "../User/EditProfile";
 import AuthModal from "../Auth/AuthModal";
 import AuthComp from "../Auth/AuthComp";
+import ForYouPosts from "../Posts/ForYouPosts/ForYouPosts";
+import CategoryWisePost from "../Category/CategoryWisePost";
+import Posts from "../Posts/Posts";
 
 function Body() {
   return (
     <div>
       <Switch>
-        <Route exact path="/">
+        <Redirect exact from="/" to="/home" />
+        <Route path="/home">
           <div className="body-container">
             <div className="category">
               <Category />
             </div>
             <div className="posts">
-              <Post />
+              <Posts />
             </div>
             <div className="explore">
               <CreatePostTab />

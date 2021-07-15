@@ -1,0 +1,14 @@
+.post-header-tab {
+  text-align: center;
+  padding: 5px 10px;
+  width: 1fr;
+  flex-grow: 1;
+  background-color: rgba(128, 128, 128, 0.164);
+  font-size: 1rem;
+}
+.posts-header {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  background-color: rgba(128, 128, 128, 0.062);
+}
