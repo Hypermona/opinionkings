@@ -30,25 +30,28 @@ function Category() {
     <div className="category">
       <Chip
         label={"Home"}
-        className="chip"
-        variant={category.id === "home" ? "default" : "outlined"}
+        className="chip rectangle"
+        variant="default"
         clickable
+        color={category.id === "home" ? "secondary" : "primary"}
         style={{ margin: 5 }}
         onClick={() => handleClick1("home")}
       />
       <Chip
         label={"Trending"}
-        className="chip"
-        variant={category.id === "trending" ? "default" : "outlined"}
+        className="chip rectangle"
+        variant="default"
         clickable
+        color={category.id === "trending" ? "secondary" : "primary"}
         style={{ margin: 5 }}
         onClick={() => handleClick1("trending")}
       />
       <Chip
         label={"Following"}
-        className="chip"
-        variant={category.id === "following" ? "default" : "outlined"}
+        className="chip rectangle"
+        variant="default"
         clickable
+        color={category.id === "following" ? "secondary" : "primary"}
         style={{ margin: 5 }}
         onClick={() => handleClick1("following")}
       />
