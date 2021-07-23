@@ -7,7 +7,7 @@ function Loading() {
     <div
       style={{ display: "flex", height: "100%", justifyContent: "center", alignItems: "center" }}
     >
-      <img src={loading} alt="loading" />
+      <img src={loading} alt="loading." />
     </div>
   );
 }
