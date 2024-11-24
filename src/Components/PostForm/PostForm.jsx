@@ -15,6 +15,9 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import { postSchema } from "../../Functions/Validator";
 
 const handleTags = (tags) => {
+  if (!tags) {
+    return [];
+  }
   let tagArray = tags
     .split(",")
     .map((e) => e.trim())
@@ -38,6 +41,7 @@ function PostForm() {
     const tags = formData.tags;
     const separatedTags = handleTags(tags);
     const variables = { ...formData, tags: separatedTags, image: previewImg };
+    console.log(variables);
     const { data, error } = await addPost(variables);
     if (data.addPost) {
       replace("/");
@@ -49,7 +53,7 @@ function PostForm() {
     console.log("form data", variables);
   };
 
-  console.log("form");
+  console.log("form", previewImg);
   return (
     <div className="edit-post">
       <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>

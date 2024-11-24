@@ -35,7 +35,7 @@ export default function Customization({ children }) {
       },
       type: finalTheme ? "dark" : "light",
       primary: {
-        main: finalTheme ? "#372044" : deepPurple[900],
+        main: finalTheme ? primary.main : primary.light,
       },
       contrastThreshold: 4,
       tonalOffset: 0.4,

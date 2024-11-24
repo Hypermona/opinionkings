@@ -10,13 +10,15 @@ import { useForm } from "react-hook-form";
 import FinalTheme from "../../Store/finalTheme";
 import { LOGIN } from "../../Queries/Auth";
 import { useMutation } from "urql";
-import { getToken, setToken } from "../../Store/token";
-import { authScheme } from "../../Functions/Validator";
+import { authScheme, loginSchema } from "../../Functions/Validator";
 import { joiResolver } from "@hookform/resolvers/joi";
 import "./auth.css";
+import Token from "../../Store/token";
 
 function Auth({ modal }) {
-  const token = getToken();
+  const { setToken } = Token.useContainer();
+  const { authType } = useParams();
+  const _signUp = authType === "signup" ? true : false;
   const [loginResult, login] = useMutation(LOGIN);
   const { finalTheme } = FinalTheme.useContainer();
   const {
@@ -24,11 +26,9 @@ function Auth({ modal }) {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: joiResolver(authScheme),
+    resolver: joiResolver(_signUp ? authScheme : loginSchema),
   });
-  const { signUp } = useParams();
   const history = useHistory();
-  const _signUp = signUp === "true" ? true : false;
   const [visibility, setVisibility] = useState(false);
 
   const onSubmit = async (data) => {
@@ -37,9 +37,9 @@ function Auth({ modal }) {
       history.push("/editProfile", { ...data, new: true });
     } else {
       login(data).then(({ data, error }) => {
-        if (data.login) {
+        if (data?.login) {
           setToken(data.login.token, data.login.id);
-          window.location.replace("/");
+          history.push("/");
         }
         if (error) {
           console.log(error);
@@ -125,11 +125,11 @@ function Auth({ modal }) {
 
         {modal ? null : _signUp ? (
           <p>
-            Already have account ? please <Link to="/auth/false">login</Link>
+            Already have account ? please <Link to="/auth/login">login</Link>
           </p>
         ) : (
           <p>
-            Don't have an account <Link to="/auth/true">create account</Link>
+            Don't have an account <Link to="/auth/signup">create account</Link>
           </p>
         )}
       </div>

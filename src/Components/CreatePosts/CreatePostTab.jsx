@@ -3,7 +3,7 @@ import AddBoxIcon from "@material-ui/icons/AddBox";
 import React from "react";
 import { useTheme } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import { getUser } from "../../Store/token";
+import Token from "../../Store/token";
 import AuthModal from "../../Store/authModal";
 import CreatePost from "./CreatePost";
 
@@ -39,6 +39,7 @@ const CreateIcon = ({ theme }) => (
 );
 
 function CreatePostTab() {
+  const { getUser } = Token.useContainer();
   const user = getUser();
   const { push } = useHistory();
   const { handleOpen } = AuthModal.useContainer();

@@ -1,14 +1,16 @@
-const AUTH_TOKEN = "auth-token";
-const USER_ID = "auth-user";
+import { useState } from "react";
+import { createContainer } from "unstated-next";
 
-export const getToken = () => localStorage.getItem(AUTH_TOKEN);
-export const getUser = () => localStorage.getItem(USER_ID);
-
-export const setToken = (token, id) => {
-  localStorage.setItem(AUTH_TOKEN, token);
-  localStorage.setItem(USER_ID, id);
-};
-export const deleteToken = () => {
-  localStorage.removeItem(AUTH_TOKEN);
-  localStorage.removeItem(USER_ID);
-};
+function Token(initialData = { token: "", userId: "" }) {
+  const [authData, setAuthData] = useState(initialData);
+  const getToken = () => authData.token;
+  const getUser = () => authData.user;
+  const setToken = (token, id) => {
+    setAuthData({ token, userId: id });
+  };
+  const deleteToken = () => {
+    setAuthData(initialData);
+  };
+  return { getToken, setToken, getUser, deleteToken };
+}
+export default createContainer(Token);

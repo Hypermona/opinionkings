@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { useForm, useWatch, Controller } from "react-hook-form";
 import FinalTheme from "../../Store/finalTheme";
-import { setToken, getToken } from "../../Store/token";
+import Token from "../../Store/token";
 import PostImageModal from "../Common/PostImageModal";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -21,6 +21,7 @@ import red from "@material-ui/core/colors/red";
 import green from "@material-ui/core/colors/green";
 import { CHECK_USER } from "../../Queries/User";
 import "./editProfile.css";
+import { useHistory } from "react-router-dom";
 
 const CheckUsername = ({ userName, word, setError, useMemo, clearErrors, errorUerName }) => {
   const { fetching, data } = userName;
@@ -60,6 +61,8 @@ const ShowCharCount = ({ word }) => {
   }
 };
 function EditProfile() {
+  const { setToken, getToken } = Token.useContainer();
+  const history = useHistory();
   const token = getToken();
   const { finalTheme } = FinalTheme.useContainer();
   const [previewImg, setPreviewImg] = useState(null);
@@ -100,7 +103,7 @@ function EditProfile() {
         if (data.addUser !== null) {
           console.log(data.addUser.token);
           setToken(data.addUser.token, data.addUser.id);
-          window.location.replace("/");
+          history.push("/");
         } else if (error) {
           const message = error.graphQLErrors[0].message;
           const type = message.split(" ")[0];

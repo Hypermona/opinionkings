@@ -14,4 +14,13 @@ mutation($email:String,$userName:String,$password:String,$new:Boolean,$image:Str
     }
 }
 `;
-export { LOGIN, SIGNUP };
+
+const REFRESHTOKEN = `
+mutation{
+    refreshToken{
+        id
+        token
+    }
+}
+`;
+export { LOGIN, SIGNUP, REFRESHTOKEN };

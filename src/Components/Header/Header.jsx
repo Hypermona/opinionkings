@@ -19,7 +19,7 @@ import Brightness4Icon from "@material-ui/icons/Brightness4";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import Theme from "../../Store/theme";
-import { deleteToken, getToken } from "../../Store/token";
+import Token from "../../Store/token";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -89,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header() {
+  const { deleteToken, getToken } = Token.useContainer();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -185,7 +186,7 @@ export default function Header() {
         <div>
           <MenuItem>
             <Link
-              to="/auth/true"
+              to="/auth/signup"
               style={{ color: "inherit", textDecoration: "none", marginLeft: 50 }}
             >
               Sign Up
@@ -193,7 +194,7 @@ export default function Header() {
           </MenuItem>
           <MenuItem>
             <Link
-              to="/auth/false"
+              to="/auth/login"
               style={{ color: "inherit", textDecoration: "none", marginLeft: 50 }}
             >
               Log In
@@ -266,12 +267,12 @@ export default function Header() {
             ) : (
               <>
                 <Button>
-                  <Link to="/auth/true" style={{ color: "white", textDecoration: "none" }}>
+                  <Link to="/auth/signup" style={{ color: "white", textDecoration: "none" }}>
                     Sign Up
                   </Link>
                 </Button>
                 <Button>
-                  <Link to="/auth/false" style={{ color: "white", textDecoration: "none" }}>
+                  <Link to="/auth/login" style={{ color: "white", textDecoration: "none" }}>
                     Log In
                   </Link>
                 </Button>

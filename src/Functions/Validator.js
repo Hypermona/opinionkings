@@ -17,6 +17,19 @@ const authScheme = Joi.object({
     }),
 });
 
+const loginSchema = Joi.object({
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required(),
+  password: Joi.string()
+    .min(8)
+    .max(30)
+    .pattern(new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"))
+    .messages({
+      "string.pattern.base": `Must contain letter number and special character`,
+    }),
+});
+
 const postSchema = Joi.object({
   title: Joi.string().max(110).required(),
   shortDescription: Joi.string().max(200),
@@ -24,4 +37,4 @@ const postSchema = Joi.object({
   tags: Joi.string().max(300),
 });
 
-export { authScheme, postSchema };
+export { authScheme, postSchema, loginSchema };

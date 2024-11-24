@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Category from "../Category/Category";
 import CreatePostTab from "../CreatePosts/CreatePostTab";
 import FollowCreators from "../FollowCreators/FollowCreators";
@@ -8,11 +8,22 @@ import PostForm from "../PostForm/PostForm";
 import EditProfile from "../User/EditProfile";
 import AuthModal from "../Auth/AuthModal";
 import AuthComp from "../Auth/AuthComp";
-import ForYouPosts from "../Posts/ForYouPosts/ForYouPosts";
-import CategoryWisePost from "../Category/CategoryWisePost";
 import Posts from "../Posts/Posts";
+import { useMutation } from "urql";
+import { REFRESHTOKEN } from "../../Queries/Auth";
+import Token from "../../Store/token";
 
 function Body() {
+  const { setToken } = Token.useContainer();
+  const [_, refresh] = useMutation(REFRESHTOKEN);
+
+  useEffect(() => {
+    refresh().then(({ data, error }) => {
+      if (!error && data?.refreshToken?.token) {
+        setToken(data.refreshToken.token, data.refreshToken.id);
+      }
+    });
+  }, []);
   return (
     <div>
       <Switch>
@@ -34,7 +45,7 @@ function Body() {
         <Route exact path="/edit">
           <PostForm />
         </Route>
-        <Route exact path="/auth/:signUp">
+        <Route exact path="/auth/:authType">
           <AuthComp />
         </Route>
         <Route exact path="/editProfile">
