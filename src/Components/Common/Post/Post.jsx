@@ -5,6 +5,7 @@ import PostTail from "./PostTail";
 import PostImage from "./PostImage";
 import Paper from "@material-ui/core/Paper";
 import "./post.css";
+import PostOptions from "./PostOptions";
 
 function Post({ post }) {
   return (
@@ -15,8 +16,11 @@ function Post({ post }) {
       <div className="body">
         <PostBody post={post} />
       </div>
+      <div className="options">
+        <PostOptions post={post} />
+      </div>
       <div className="tail">
-        <PostTail />
+        <PostTail post={post} />
       </div>
       {post.image && (
         <div className="image">

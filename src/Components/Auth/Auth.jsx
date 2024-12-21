@@ -14,6 +14,7 @@ import { authScheme, loginSchema } from "../../Functions/Validator";
 import { joiResolver } from "@hookform/resolvers/joi";
 import "./auth.css";
 import Token from "../../Store/token";
+import AuthModal from "../../Store/authModal.js";
 
 function Auth({ modal }) {
   const { setToken } = Token.useContainer();
@@ -21,6 +22,7 @@ function Auth({ modal }) {
   const _signUp = authType === "signup" ? true : false;
   const [loginResult, login] = useMutation(LOGIN);
   const { finalTheme } = FinalTheme.useContainer();
+  const { handleClose } = AuthModal.useContainer();
   const {
     register,
     handleSubmit,
@@ -30,26 +32,26 @@ function Auth({ modal }) {
   });
   const history = useHistory();
   const [visibility, setVisibility] = useState(false);
-
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     if (_signUp) {
       history.push("/editProfile", { ...data, new: true });
     } else {
       login(data).then(({ data, error }) => {
         if (data?.login) {
-          setToken(data.login.token, data.login.id);
+          setToken(data.login.token, data.login.user);
+          handleClose();
           history.push("/");
         }
         if (error) {
-          console.log(error);
+          // console.log(error);
         }
       });
-      console.log(data);
+      // console.log(data);
     }
   };
 
-  console.log(errors);
+  // console.log(errors);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="signup">

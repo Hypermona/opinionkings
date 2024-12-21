@@ -20,6 +20,9 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import Theme from "../../Store/theme";
 import Token from "../../Store/token";
+import { useMutation } from "urql";
+import { LOGOUT } from "../../Queries/User";
+import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -89,13 +92,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header() {
-  const { deleteToken, getToken } = Token.useContainer();
+  const { deleteToken, getToken,getUser } = Token.useContainer();
+  const user = getUser()
+  const [_,callLogout] = useMutation(LOGOUT)
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const { theme, setTheme } = Theme.useContainer();
-  console.log("theme", theme);
+  // console.log("theme", theme);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -116,8 +121,9 @@ export default function Header() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  const handleLogOut = () => {
+  const handleLogOut =async () => {
     deleteToken();
+    await callLogout()
     window.location.replace("/");
   };
   const menuId = "primary-search-account-menu";
@@ -243,7 +249,7 @@ export default function Header() {
             </IconButton>
             {getToken() ? (
               <>
-                <IconButton aria-label="show 4 new mails" color="inherit">
+                {/* <IconButton aria-label="show 4 new mails" color="inherit">
                   <Badge badgeContent={4} color="secondary">
                     <MailIcon />
                   </Badge>
@@ -252,7 +258,7 @@ export default function Header() {
                   <Badge badgeContent={17} color="secondary">
                     <NotificationsIcon />
                   </Badge>
-                </IconButton>
+                </IconButton> */}
                 <IconButton
                   edge="end"
                   aria-label="account of current user"
@@ -261,7 +267,11 @@ export default function Header() {
                   onClick={handleProfileMenuOpen}
                   color="inherit"
                 >
-                  <AccountCircle />
+                  {user.id ? (
+                    <Avatar src={user.image} alt={user.userName} style={{ width:28, height: 28 }} />
+                  ) : (
+                    <AccountCircle />
+                  )}
                 </IconButton>
               </>
             ) : (

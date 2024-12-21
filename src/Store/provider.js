@@ -20,19 +20,19 @@ import Token from "./token";
 // export default Provider;
 const Provider = (props) => {
   return (
-    <Token.Provider>
-      <Users.Provider>
-        <AuthModal.Provider>
-          <Theme.Provider>
-            <Posts.Provider>
-              <Category.Provider>
+    <AuthModal.Provider>
+      <Theme.Provider>
+        <Posts.Provider>
+          <Category.Provider>
+            <Users.Provider>
+              <Token.Provider>
                 <FinalTheme.Provider>{props.children}</FinalTheme.Provider>
-              </Category.Provider>
-            </Posts.Provider>
-          </Theme.Provider>
-        </AuthModal.Provider>
-      </Users.Provider>
-    </Token.Provider>
+              </Token.Provider>
+            </Users.Provider>
+          </Category.Provider>
+        </Posts.Provider>
+      </Theme.Provider>
+    </AuthModal.Provider>
   );
 };
 export default Provider;

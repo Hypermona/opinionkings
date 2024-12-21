@@ -1,7 +1,16 @@
 const LOGIN = `
 mutation($email:String,$userName:String,$password:String){
     login(email:$email,userName:$userName,password:$password){
-        id
+        user{
+            id
+            image
+            name
+            userName
+            followers
+            following
+            verified
+            saved
+        }
         token
     }
 }
@@ -9,7 +18,16 @@ mutation($email:String,$userName:String,$password:String){
 const SIGNUP = `
 mutation($email:String,$userName:String,$password:String,$new:Boolean,$image:String,$name:String){
     addUser(email:$email,userName:$userName,password:$password,new:$new,image:$image,name:$name){
-        id
+        user{
+            id
+            image
+            name
+            userName
+            followers
+            following
+            verified
+            saved
+        }
         token
     }
 }
@@ -18,7 +36,16 @@ mutation($email:String,$userName:String,$password:String,$new:Boolean,$image:Str
 const REFRESHTOKEN = `
 mutation{
     refreshToken{
-        id
+        user{
+            id
+            image
+            name
+            userName
+            followers
+            following
+            verified
+            saved
+        }
         token
     }
 }

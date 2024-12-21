@@ -34,6 +34,7 @@ const postSchema = Joi.object({
   title: Joi.string().max(110).required(),
   shortDescription: Joi.string().max(200),
   description: Joi.string().max(1000),
+  opinions:Joi.any(),
   tags: Joi.string().max(300),
 });
 

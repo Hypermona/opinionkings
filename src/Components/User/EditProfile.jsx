@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState,useMemo } from "react";
 import TextField from "@material-ui/core/TextField";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { useMutation, useQuery } from "urql";
+import { useMutation } from "urql";
 import { useLocation } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { useForm, useWatch, Controller } from "react-hook-form";
@@ -22,6 +20,7 @@ import green from "@material-ui/core/colors/green";
 import { CHECK_USER } from "../../Queries/User";
 import "./editProfile.css";
 import { useHistory } from "react-router-dom";
+import useOnceQuery from "../../hooks/useOnceQuery";
 
 const CheckUsername = ({ userName, word, setError, useMemo, clearErrors, errorUerName }) => {
   const { fetching, data } = userName;
@@ -36,7 +35,7 @@ const CheckUsername = ({ userName, word, setError, useMemo, clearErrors, errorUe
     }
   }, [data, setError, word, clearErrors]);
   if (word) {
-    console.log("UserName", userName);
+    // console.log("UserName", userName);
     return (
       <InputAdornment>
         {fetching ? (
@@ -86,8 +85,8 @@ function EditProfile() {
     ),
     resolver: joiResolver(authScheme),
   });
-  console.log(errors);
-  console.log(useLocation());
+  // console.log(errors);
+  // console.log(useLocation());
   const onSubmit = async (signUpData) => {
     const variables = {
       ...signUpData,
@@ -95,14 +94,14 @@ function EditProfile() {
       image: previewImg,
       new: state.new,
     };
-    console.log("variables", variables);
+    // console.log("variables", variables);
     if (state.new) {
       try {
         const { data, error } = await signUp(variables);
-        console.log(data, error);
+        // console.log(data, error);
         if (data.addUser !== null) {
-          console.log(data.addUser.token);
-          setToken(data.addUser.token, data.addUser.id);
+          // console.log(data.addUser.token);
+          setToken(data.addUser.token, data.addUser.user);
           history.push("/");
         } else if (error) {
           const message = error.graphQLErrors[0].message;
@@ -110,7 +109,7 @@ function EditProfile() {
           setError(type, { type: type, message: message });
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
   };
@@ -119,7 +118,7 @@ function EditProfile() {
     name: ["userName", "bio"],
   });
 
-  const [userNameResult] = useQuery({
+  const [userNameResult] = useOnceQuery({
     query: CHECK_USER,
     variables: { userName: formWatch[0] },
   });
@@ -133,7 +132,7 @@ function EditProfile() {
   //     clearErrors(["userName"]);
   //   }
   // }, [userNameResult.data, formWatch, setError, clearErrors]);
-  console.log(formWatch);
+  // console.log(formWatch);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="edit-profile">

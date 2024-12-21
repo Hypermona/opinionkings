@@ -10,8 +10,11 @@ import BottomTab from "../BottomTab/BottomTab";
 const url = "http://localhost:4000/";
 // const url=process.env.REACT_APP_API_END_POINT
 
+
+
 function Main() {
   const { getToken } = Token.useContainer();
+  
   const client = useMemo(
     () =>
       createClient({

@@ -20,6 +20,15 @@
 }
 /* Media query for small laptops and Tablets */
 @media only screen and (max-width: 1200px) {
+  .body-container {
+    grid-template-columns: 100vw;
+    gap: 0.5rem;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "category ."
+      "posts explore";
+  }
 }
 
 /* Media query for smart phones and mobiles */

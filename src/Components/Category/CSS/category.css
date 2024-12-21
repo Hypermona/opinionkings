@@ -12,6 +12,21 @@
 .rectangle {
   border-radius: 5px !important;
 }
+@media only screen and (max-width: 1200px) {
+  .category-container {
+    width: 100%;
+    flex-direction: row;
+    margin: 5px auto;
+    padding-top: 10px !important;
+
+    overflow: scroll;
+    cursor: pointer;
+  }
+  .chip {
+    margin: 5px 2px;
+    min-width: 6rem;
+  }
+}
 @media only screen and (max-width: 600px) {
   .category-container {
     width: 100%;

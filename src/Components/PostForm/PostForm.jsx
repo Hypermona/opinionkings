@@ -1,6 +1,6 @@
 import Button from "@material-ui/core/Button";
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 // import ImagePreview from "../../Common/ImagePreview";
 import TextField from "@material-ui/core/TextField";
 import FinalTheme from "../../Store/finalTheme";
@@ -9,10 +9,11 @@ import "./postForm.css";
 import PostImageModal from "../Common/PostImageModal";
 import { useMutation } from "urql";
 import { ADD_POST } from "../../Queries/Post";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { joiResolver } from "@hookform/resolvers/joi";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import { postSchema } from "../../Functions/Validator";
+import { IconButton, Typography } from "@material-ui/core";
+import { DeleteRounded } from "@material-ui/icons";
 
 const handleTags = (tags) => {
   if (!tags) {
@@ -26,6 +27,8 @@ const handleTags = (tags) => {
   return tagArray;
 };
 
+
+
 function PostForm() {
   const [previewImg, setPreviewImg] = React.useState(null);
   const { finalTheme } = FinalTheme.useContainer();
@@ -33,27 +36,53 @@ function PostForm() {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({ mode: "onChange", resolver: joiResolver(postSchema) });
+  } = useForm({
+    mode: "onChange",
+    resolver: joiResolver(postSchema),
+    defaultValues: {
+      opinions: [{ label: "Yes" }, { label: "No" }],
+    },
+  });
+  console.log("errors", errors);
+  const { fields, append,  remove, } = useFieldArray({
+    control, // control props comes from useForm (optional: if you are using FormProvider)
+    name: "opinions", // unique name for your Field Array
+    
+  });
   const [addPostResult, addPost] = useMutation(ADD_POST);
   const { replace } = useHistory();
 
+  function generateValue(label=""){
+    return label
+      .split(" ")
+      .map((s) => s.toLocaleLowerCase())
+      .join("_")
+      .concat("_"+Math.round(Math.random() * 100));
+    
+  }
+
   const onSubmit = async (formData) => {
     const tags = formData.tags;
+    const opinions = formData.opinions;
+    opinions.forEach(opinion => {
+      opinion.value = generateValue(opinion.label)
+      opinion.selectedBy = []
+    });
     const separatedTags = handleTags(tags);
-    const variables = { ...formData, tags: separatedTags, image: previewImg };
+    const variables = { ...formData, tags: separatedTags,opinions, image: previewImg };
     console.log(variables);
     const { data, error } = await addPost(variables);
     if (data.addPost) {
       replace("/");
     }
     if (error) {
-      console.log(error);
+      // console.log(error);
     }
-    console.log(data, error);
-    console.log("form data", variables);
+    // console.log(data, error);
+    // console.log("form data", variables);
   };
 
-  console.log("form", previewImg);
+  // console.log("form", previewImg);
   return (
     <div className="edit-post">
       <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
@@ -121,6 +150,47 @@ function PostForm() {
               />
             )}
           />
+
+          <div style={{ width: "100%", padding: "10px 20px" }}>
+            <Typography color="textSecondary">Provide Opinion Options</Typography>
+            {fields.map((item, index) => (
+              <div key={item.id} style={{ display: "flex", alignItems: "center" }}>
+                <Controller
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      type="text"
+                      style={{ width: "80%", margin: "10px 0" }}
+                      variant="outlined"
+                      multiline
+                      color={finalTheme ? "secondary" : "primary"}
+                      label="Label"
+                      error={errors.o}
+                      helperText={
+                        errors?.opinions?.[index]?.label
+                          ? errors?.opinions[index]?.label?.message
+                          : ""
+                      }
+                    />
+                  )}
+                  name={`opinions.${index}.label`}
+                  control={control}
+                />
+                <IconButton type="button" onClick={() => remove(index)}>
+                  <DeleteRounded />
+                </IconButton>
+              </div>
+            ))}
+            <Button
+              style={{ marginTop: 10 }}
+              variant="outlined"
+              size="medium"
+              type="button"
+              onClick={() => append({ label:""  })}
+            >
+              append
+            </Button>
+          </div>
 
           <Controller
             name="tags"

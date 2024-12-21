@@ -35,22 +35,24 @@ function PostHead({ user, dateAndTime }) {
   };
 
   const _dateAndTime = new Date(Number(dateAndTime)).toLocaleDateString(undefined, options);
-  console.log("date", new Date(dateAndTime));
+  // console.log("date", new Date(dateAndTime));
   return (
     <>
       {user && (
         <div className="header-container">
           <Avatar src={user.image} alt={user.userName} />
-          <div className="head-about">
-            <p className="name">
-              {user.name}
-              <Tooltip title="verified" placement="right-start">
-                <CheckCircleIcon className="check-badge" style={{ color: "#289bd7" }} />
-              </Tooltip>
-            </p>
-            <p className="user-name">@{user.userName}</p>
+          <div className="head-main">
+            <div className="head-about">
+              <p className="name">
+                {user.name}
+                <Tooltip title="verified" placement="right-start">
+                  <CheckCircleIcon className="check-badge" style={{ color: "#289bd7" }} />
+                </Tooltip>
+              </p>
+              <p className="user-name">@{user.userName}</p>
+            </div>
+            <p className="date-time">{_dateAndTime}</p>
           </div>
-          <p className="date-time">{_dateAndTime}</p>
           <div style={{ marginLeft: "auto" }}>
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
               <MoreVertIcon />

@@ -1,4 +1,3 @@
-import { Height } from "@material-ui/icons";
 import React from "react";
 import loading from "../../Images/Loading.svg";
 

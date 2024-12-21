@@ -1,14 +1,14 @@
 import React from "react";
 import Chip from "@material-ui/core/Chip";
-import { useQuery } from "urql";
 import "./CSS/category.css";
 import { CATEGORIES } from "../../Queries/Category";
 import { useHistory } from "react-router-dom";
 import _category from "../../Store/category";
+import useOnceQuery from "../../hooks/useOnceQuery";
 
 function Category() {
   const { category, setCategory } = _category.useContainer();
-  const [result] = useQuery({
+  const [result] = useOnceQuery({
     query: CATEGORIES,
   });
   const { push } = useHistory();
@@ -24,9 +24,7 @@ function Category() {
       push(`/home/trending`);
     }
   };
-  const { data, fetching, error } = result;
-  console.log("data", data);
-  console.log("category", category);
+  const { data } = result;
   return (
     <div className="category-container">
       <Chip

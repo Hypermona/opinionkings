@@ -1,0 +1,13 @@
+.progress_button{
+    position: relative;
+    overflow: hidden;
+}
+
+.progress_button__overlay{
+    width: 1%;
+    background: rgb(116 116 116 / 47%);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

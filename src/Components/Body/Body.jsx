@@ -14,13 +14,14 @@ import { REFRESHTOKEN } from "../../Queries/Auth";
 import Token from "../../Store/token";
 
 function Body() {
-  const { setToken } = Token.useContainer();
+  const { setToken,getUser } = Token.useContainer();
   const [_, refresh] = useMutation(REFRESHTOKEN);
 
   useEffect(() => {
     refresh().then(({ data, error }) => {
+       console.log(data,error)
       if (!error && data?.refreshToken?.token) {
-        setToken(data.refreshToken.token, data.refreshToken.id);
+        setToken(data.refreshToken.token, data.refreshToken.user);
       }
     });
   }, []);
@@ -38,7 +39,7 @@ function Body() {
             </div>
             <div className="explore">
               <CreatePostTab />
-              <FollowCreators />
+              {getUser().id && <FollowCreators />}
             </div>
           </div>
         </Route>

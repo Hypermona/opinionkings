@@ -5,11 +5,16 @@
   font-weight: 600;
   margin: 0;
   padding: 0;
+  white-space: nowrap;
+  display: flex;
 }
 .user-name {
   color: gray;
   margin: 0;
   padding: 0;
+}
+.head-main{
+  display: flex;
 }
 .check-badge {
   font-size: 1rem !important;
@@ -24,10 +29,12 @@
   font-size: 0.7rem;
   margin: auto 0 5px 0;
 }
-/* @media only screen and (max-width: 600px) {
-  .check-badge {
-    font-size: 1rem;
-    margin-bottom: -2px;
-    margin-left: 3px;
-  }
-} */
+@media only screen and (max-width: 1200px) {
+    .head-main{
+      flex-direction: column;
+      
+    }
+    .date-time{
+      margin-left: 10px;
+    }
+}

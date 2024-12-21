@@ -12,8 +12,10 @@ import { useTheme } from "@material-ui/core/styles";
 import Error from "../Errors/Error";
 import Typography from "@material-ui/core/Typography";
 import Users from "../../Store/users";
-import { useQuery } from "urql";
-import { GET_USERS } from "../../Queries/User";
+import { useMutation } from "urql";
+import { GET_USERS, UPDATE_FOLLOW } from "../../Queries/User";
+import token from "../../Store/token";
+import useOnceQuery from "../../hooks/useOnceQuery";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,13 +28,21 @@ const useStyles = makeStyles((theme) => ({
 
 function FollowCreators() {
   const theme = useTheme();
-  const [usersResult] = useQuery({ query: GET_USERS });
+  const [usersResult] = useOnceQuery({ query: GET_USERS });
   const classes = useStyles();
   const { users, setUsers } = Users.useContainer();
+  const { getUser, updateFollowing } = token.useContainer();
+  const [_, follow] = useMutation(UPDATE_FOLLOW);
+  const currentUser = getUser();
   React.useEffect(() => {
     setUsers(usersResult);
   }, [setUsers, usersResult]);
-  console.log(usersResult);
+
+
+  async function onFollow(id) {
+    const user = await follow({ followerId: id });
+    updateFollowing(user.data?.updateFollowers?.following);
+  }
   return (
     <div>
       <div className="follow-creator" style={{ background: theme.palette.primary.main }}>
@@ -44,24 +54,28 @@ function FollowCreators() {
         {users.fetching ? (
           <div>Loading...</div>
         ) : users.data ? (
-          users.data.users.map((u) => (
-            <div key={u.userName}>
-              <ListItem button>
-                <ListItemIcon>
-                  <Avatar src={u.image} alt={u.name} />
-                </ListItemIcon>
-                <ListItemText primary={u.name} secondary={"@" + u.userName} />
-                <Button
-                  size="small"
-                  variant="outlined"
-                  style={{ color: "#289bd7", borderColor: "#289bd7", borderRadius: 18 }}
-                >
-                  Follow
-                </Button>
-              </ListItem>
-              <Divider />
-            </div>
-          ))
+          users.data.users.map(
+            (u) =>
+              u.id !== currentUser.id && (
+                <div key={u.userName}>
+                  <ListItem>
+                    <ListItemIcon>
+                      <Avatar src={u.image} alt={u.name} />
+                    </ListItemIcon>
+                    <ListItemText primary={u.name} secondary={"@" + u.userName} style={{whiteSpace:"nowrap"}} />
+                    <Button
+                      onClick={()=>onFollow(u.id)}
+                      size="small"
+                      variant="outlined"
+                      style={{ color: "#289bd7", borderColor: "#289bd7", borderRadius: 18,minWidth:100 }}
+                    >
+                      {currentUser?.following?.includes(u.id)?"Unfollow": "Follow"}
+                    </Button>
+                  </ListItem>
+                  <Divider />
+                </div>
+              )
+          )
         ) : (
           <Error />
         )}

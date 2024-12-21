@@ -22,7 +22,7 @@ function PostImage({ closeModal, image, setPreviewImg, cropShape }) {
     closeModal();
     try {
       const croppedImage = await getCroppedImage(image, croppedAreaPixels, rotation);
-      console.log("donee", { croppedImage });
+      // console.log("donee", { croppedImage });
       setPreviewImg(croppedImage);
       setImgUrl(croppedImage);
     } catch (e) {

@@ -1,10 +1,10 @@
 import React, { memo } from "react";
 import Post from "../../Common/Post/Post";
-import { useQuery } from "urql";
 import { GET_POSTS } from "../../../Queries/Post";
 import Category from "../../../Store/category";
 import Error from "../../Errors/Error";
 import Loading from "../../Loading/Loading";
+import useOnceQuery from "../../../hooks/useOnceQuery";
 
 const tabsCategory = ["For You", "Trending", "Following"];
 
@@ -15,10 +15,10 @@ const Tab = ({ title }) => {
 function TrendingPosts() {
   const { category } = Category.useContainer();
 
-  const [result] = useQuery({ query: GET_POSTS });
+  const [result] = useOnceQuery({ query: GET_POSTS });
   const { data, fetching, error } = result;
 
-  console.log(result.data);
+  // console.log(result.data);
   return (
     <>
       <div className="posts-header">
