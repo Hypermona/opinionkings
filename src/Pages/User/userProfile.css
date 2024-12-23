@@ -1,0 +1,20 @@
+.user__posts{
+    width: 50vw;
+    margin: auto;
+}
+
+.user__bio{
+    width: 25vw;
+    margin: auto;
+}
+
+@media only screen and (max-width: 600px){
+    .user__posts{
+    width: 100vw;
+    margin: auto;
+}
+.user__bio{
+    width: 90vw;
+    margin: auto;
+}
+}

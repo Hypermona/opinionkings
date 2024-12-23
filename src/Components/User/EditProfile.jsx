@@ -1,4 +1,4 @@
-import React, { useState,useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import TextField from "@material-ui/core/TextField";
 import { useMutation } from "urql";
 import { useLocation } from "react-router-dom";
@@ -17,15 +17,23 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import { authScheme } from "../../Functions/Validator";
 import red from "@material-ui/core/colors/red";
 import green from "@material-ui/core/colors/green";
-import { CHECK_USER } from "../../Queries/User";
+import { CHECK_USER, UPDATE_USER } from "../../Queries/User";
 import "./editProfile.css";
 import { useHistory } from "react-router-dom";
 import useOnceQuery from "../../hooks/useOnceQuery";
 
-const CheckUsername = ({ userName, word, setError, useMemo, clearErrors, errorUerName }) => {
+const CheckUsername = ({
+  userName,
+  word,
+  setError,
+  useMemo,
+  clearErrors,
+  errorUerName,
+  isEdit,
+}) => {
   const { fetching, data } = userName;
   useMemo(() => {
-    if (data && data.checkUser.user) {
+    if (data && data.checkUser.user && !isEdit) {
       setError("userName", {
         type: "userName",
         message: "username " + word + " exists already",
@@ -34,8 +42,7 @@ const CheckUsername = ({ userName, word, setError, useMemo, clearErrors, errorUe
       clearErrors(["userName"]);
     }
   }, [data, setError, word, clearErrors]);
-  if (word) {
-    // console.log("UserName", userName);
+  if (word && !isEdit) {
     return (
       <InputAdornment>
         {fetching ? (
@@ -60,12 +67,14 @@ const ShowCharCount = ({ word }) => {
   }
 };
 function EditProfile() {
-  const { setToken, getToken } = Token.useContainer();
+  const { setToken, getToken, getUser, setUser } = Token.useContainer();
+  const user = getUser();
   const history = useHistory();
   const token = getToken();
   const { finalTheme } = FinalTheme.useContainer();
-  const [previewImg, setPreviewImg] = useState(null);
+  const [previewImg, setPreviewImg] = useState(user?.image || null);
   const [signUpResult, signUp] = useMutation(SIGNUP);
+  const [updateUserdata, updateUser] = useMutation(UPDATE_USER);
 
   const { state } = useLocation();
   const {
@@ -77,17 +86,39 @@ function EditProfile() {
   } = useForm({
     defaultValues: useMemo(
       () => ({
-        name: state.name,
-        email: state.email,
-        bio: "",
+        name: user?.id ? user?.name : state?.name,
+        email: user?.id ? user?.email : state?.email,
+        bio: user?.id ? user?.bio : "",
+        userName: user?.id ? user?.userName : "",
       }),
-      [state]
+      [state, user]
     ),
     resolver: joiResolver(authScheme),
   });
-  // console.log(errors);
-  // console.log(useLocation());
+  console.log("erro", errors);
+
+  async function onUpdate(data) {
+    console.log("data", data);
+    const { data: _data, error } = await updateUser({
+      name: data.name,
+      bio: data.bio,
+      image: previewImg,
+    });
+    if (_data.updateUser !== null) {
+      setUser(_data.updateUser.user);
+      history.push("/user/" + user?.id);
+    } else if (error) {
+      const message = error.graphQLErrors[0].message;
+      const type = message.split(" ")[0];
+      setError(type, { type: type, message: message });
+    }
+  }
+
   const onSubmit = async (signUpData) => {
+    console.log("goooo", user.id);
+    if (user.id) {
+      return await onUpdate(signUpData);
+    }
     const variables = {
       ...signUpData,
       password: state.password,
@@ -121,6 +152,7 @@ function EditProfile() {
   const [userNameResult] = useOnceQuery({
     query: CHECK_USER,
     variables: { userName: formWatch[0] },
+    pause: user?.id,
   });
   // useEffect(() => {
   //   if (userNameResult.data && userNameResult.data.checkUser.user) {
@@ -133,6 +165,9 @@ function EditProfile() {
   //   }
   // }, [userNameResult.data, formWatch, setError, clearErrors]);
   // console.log(formWatch);
+  function goToProfile() {
+    history.push("/user/" + user?.id);
+  }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="edit-profile">
@@ -140,7 +175,7 @@ function EditProfile() {
           setPreviewImg={setPreviewImg}
           image={AccountCircleIcon}
           cropShape="round"
-          previewImg={previewImg}
+          previewImg={previewImg || user?.image}
         />
         <Controller
           name="name"
@@ -186,6 +221,7 @@ function EditProfile() {
               {...field}
               className="input"
               label="Username"
+              disabled={user?.id}
               variant="outlined"
               color={finalTheme ? "secondary" : "primary"}
               InputProps={{
@@ -197,6 +233,7 @@ function EditProfile() {
                     useMemo={useMemo}
                     clearErrors={clearErrors}
                     errorUerName={errors.userName}
+                    isEdit={user?.id}
                   />
                 ),
               }}
@@ -216,6 +253,7 @@ function EditProfile() {
               className="input"
               label="Email"
               variant="outlined"
+              disabled={user?.id}
               color={finalTheme ? "secondary" : "primary"}
               error={!!errors.email}
               helperText={errors.email ? errors.email.message : ""}
@@ -246,18 +284,29 @@ function EditProfile() {
 
         <div className="buttons">
           {/* <Button className="button" color={finalTheme?"secondary":"primary"} >Back</Button> */}
-          <Button className="button" color={finalTheme ? "secondary" : "primary"}>
-            Skip
-          </Button>
+          {user.id ? (
+            <Button
+              type="button"
+              onClick={goToProfile}
+              className="button"
+              color={finalTheme ? "secondary" : "primary"}
+            >
+              Back to Profile
+            </Button>
+          ) : (
+            <Button type="submit" className="button" color={finalTheme ? "secondary" : "primary"}>
+              Skip
+            </Button>
+          )}
           <Button
             type="submit"
             className="button"
-            disabled={token && true | signUpResult.fetching}
+            disabled={(token && !user?.id) || signUpResult.fetching || updateUserdata.fetching}
             size="large"
             color={finalTheme ? "secondary" : "primary"}
             variant="contained"
           >
-            Submit
+            {user.id ? "Update" : "Submit"}
           </Button>
         </div>
       </div>

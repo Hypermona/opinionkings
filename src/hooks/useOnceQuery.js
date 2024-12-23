@@ -1,10 +1,16 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useQuery } from "urql";
 
-function useOnceQuery(params) {
+function useOnceQuery(params,key) {
   const callOnce = useRef(false);
-  const result = useQuery({ ...params,pause:callOnce.current });
-  const [res] = result
+  const result = useQuery({ pause:callOnce.current,...params });
+  const [res,refetch] = result
+  useEffect(()=>{
+    if (key) {
+      refetch();
+    }
+  },[key])
+  console.log("jeeee", key, callOnce.current);
   callOnce.current = Boolean(res.data);
   return result;
 }

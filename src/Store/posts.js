@@ -3,6 +3,7 @@ import { createContainer } from "unstated-next";
 
 function Posts(initialCount = []) {
   let [posts, setPosts] = useState({ data: {}, fetching: true, error: {} });
+  let [post, setPost] = useState(undefined);
   function updateOpinions(postId,opinions){
     setPosts((prev)=>{
        const updatedPosts = { ...prev };
@@ -16,6 +17,6 @@ function Posts(initialCount = []) {
        return updatedPosts;
     })
   }
-  return { posts, setPosts, updateOpinions };
+  return {post,setPost, posts, setPosts, updateOpinions };
 }
 export default createContainer(Posts);

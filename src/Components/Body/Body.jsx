@@ -12,14 +12,15 @@ import Posts from "../Posts/Posts";
 import { useMutation } from "urql";
 import { REFRESHTOKEN } from "../../Queries/Auth";
 import Token from "../../Store/token";
+import UserProfile from "../../Pages/User/UserProfile";
 
 function Body() {
-  const { setToken,getUser } = Token.useContainer();
+  const { setToken, getUser } = Token.useContainer();
   const [_, refresh] = useMutation(REFRESHTOKEN);
 
   useEffect(() => {
     refresh().then(({ data, error }) => {
-       console.log(data,error)
+      console.log(data, error);
       if (!error && data?.refreshToken?.token) {
         setToken(data.refreshToken.token, data.refreshToken.user);
       }
@@ -39,11 +40,11 @@ function Body() {
             </div>
             <div className="explore">
               <CreatePostTab />
-              {getUser().id && <FollowCreators />}
+              {getUser()?.id && <FollowCreators />}
             </div>
           </div>
         </Route>
-        <Route exact path="/edit">
+        <Route exact path="/edit/:id">
           <PostForm />
         </Route>
         <Route exact path="/auth/:authType">
@@ -51,6 +52,9 @@ function Body() {
         </Route>
         <Route exact path="/editProfile">
           <EditProfile />
+        </Route>
+        <Route exact path="/user/:id">
+          <UserProfile />
         </Route>
       </Switch>
       <AuthModal />

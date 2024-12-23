@@ -9,7 +9,7 @@ function CreatePost({ children }) {
   const { handleOpen } = AuthModal.useContainer();
   const handleClick = () => {
     if (getUser()?.id) {
-      push("/edit");
+      push("/edit/new");
     } else {
       handleOpen();
     }

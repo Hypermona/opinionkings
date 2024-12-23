@@ -11,7 +11,7 @@ function Post({ post }) {
   return (
     <Paper className="post-container" key={post.id} elevation={0}>
       <div className="header">
-        <PostHead user={post.author} dateAndTime={post.createdAt} />
+        <PostHead user={post.author} dateAndTime={post.createdAt} postId={post.id} />
       </div>
       <div className="body">
         <PostBody post={post} />

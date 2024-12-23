@@ -21,16 +21,37 @@ query{
 `;
 
 const GET_USER = `
-query{
-    user{
+query($id:ID){
+    user(id:$id){
         id
         image
         name
+        bio
         userName
         followers
         following
         verified
         saved
+        posts{
+            id
+            title
+            image
+            shortDescription
+            saves
+            createdAt
+            author{
+                id
+                userName
+                name
+                verified
+                image
+            }
+            opinions {
+                label
+                value
+                selectedBy
+            } 
+        }
     }
 }
 `;
@@ -62,4 +83,24 @@ mutation{
 }
 `;
 
-export { CHECK_USER, GET_USERS, GET_USER, SAVE_POST, LOGOUT, UPDATE_FOLLOW };
+const UPDATE_USER = `
+mutation($image:String,$name:String,$bio:String){
+    updateUser(image:$image,name:$name,bio:$bio){
+        user{
+            id
+            image
+            name
+            bio
+            email
+            userName
+            followers
+            following
+            verified
+            saved
+        }
+        token
+    }
+}
+`;
+
+export { CHECK_USER, GET_USERS, GET_USER, SAVE_POST, LOGOUT, UPDATE_FOLLOW, UPDATE_USER };

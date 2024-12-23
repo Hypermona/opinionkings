@@ -16,12 +16,14 @@ mutation($email:String,$userName:String,$password:String){
 }
 `;
 const SIGNUP = `
-mutation($email:String,$userName:String,$password:String,$new:Boolean,$image:String,$name:String){
-    addUser(email:$email,userName:$userName,password:$password,new:$new,image:$image,name:$name){
+mutation($email:String,$userName:String,$password:String,$new:Boolean,$image:String,$name:String,$bio:String){
+    addUser(email:$email,userName:$userName,password:$password,new:$new,image:$image,name:$name,bio:$bio){
         user{
             id
             image
             name
+            bio
+            email
             userName
             followers
             following
@@ -40,6 +42,8 @@ mutation{
             id
             image
             name
+            email
+            bio
             userName
             followers
             following

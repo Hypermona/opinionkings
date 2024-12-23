@@ -47,8 +47,8 @@ query ($id:ID){
 }
 `;
 const GET_POSTS = `
-query {
-    posts{
+query ($ids:[ID]){
+    posts(ids:$ids){
         id
         title
         image
@@ -58,6 +58,7 @@ query {
         dislikes
         shares
         saves
+        tags
         createdAt
         author{
             id

@@ -14,7 +14,6 @@ function getOpinionConfigs(userId, opinions = []) {
     return { selectedOpinion, percentageList };
   }
   for (let opinion of opinions) {
-    console.log(userId, opinion?.selectedBy);
     if (opinion?.selectedBy?.includes(userId)) {
       selectedOpinion = opinion.value;
     }
@@ -32,10 +31,9 @@ function PostOptions({ post }) {
   const { handleOpen } = authModal.useContainer();
   const user = getUser();
   let { selectedOpinion, percentageList } = getOpinionConfigs(user.id, post?.opinions);
-  console.log(selectedOpinion, percentageList);
   async function onOpinion(optionValue) {
-    if(!user.id){
-      handleOpen()
+    if (!user.id) {
+      handleOpen();
     }
     if (selectedOpinion) {
       return;

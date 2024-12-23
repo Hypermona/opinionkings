@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Tooltip from "@material-ui/core/Tooltip";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
@@ -8,17 +8,23 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 // import Users from "../../Store/users";
 import "./postHead.css";
+import { Snackbar } from "@material-ui/core";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import token from "../../../Store/token";
 
 // import { USERS } from "../../data";
 
-function PostHead({ user, dateAndTime }) {
-  // const { users, setUsers } = Users.useContainer();
+function PostHead({ user, dateAndTime,postId }) {
+  const { getUser } = token.useContainer();
+  const currentUser = getUser()
   // React.useEffect(() => {
   //   setUsers(USERS);
   // }, [setUsers]);
   // const user = users.filter((u) => u.userName === userId)[0];
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const history = useHistory()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -35,7 +41,19 @@ function PostHead({ user, dateAndTime }) {
   };
 
   const _dateAndTime = new Date(Number(dateAndTime)).toLocaleDateString(undefined, options);
-  // console.log("date", new Date(dateAndTime));
+
+  function onCopyProfile(){
+    navigator.clipboard.writeText("http://localhost:3000/" + user.id);
+    setShowToast(true);
+    handleClose()
+  }
+  function onEditPost() {
+    history.push("/edit/"+postId)
+    handleClose();
+  }
+  function handleCloseToast() {
+    setShowToast(false);
+  }
   return (
     <>
       {user && (
@@ -64,10 +82,16 @@ function PostHead({ user, dateAndTime }) {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Report</MenuItem>
-              <MenuItem onClick={handleClose}>Not Intrested</MenuItem>
-              <MenuItem onClick={handleClose}>Copy Profile</MenuItem>
+              {currentUser?.id===user.id &&<MenuItem onClick={onEditPost}>Edit Post</MenuItem>}
+              <MenuItem onClick={onCopyProfile}>Copy Profile</MenuItem>
             </Menu>
+            <Snackbar
+              open={showToast}
+              autoHideDuration={3000}
+              onClose={handleCloseToast}
+              message="Link Copied"
+              // action={action}
+            />
           </div>
         </div>
       )}

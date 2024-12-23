@@ -9,6 +9,7 @@ import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import { primary, secondary } from "../../Custom/Customization";
 
 import "./selectImage.css";
+import { Input } from "@material-ui/core";
 
 function SelectImage(props) {
   const { finalTheme } = FinalTheme.useContainer();
@@ -57,28 +58,34 @@ function SelectImage(props) {
     );
   } else {
     return (
-      <Paper className="select-image">
-        <div className="local-image" style={{ color: finalTheme ? secondary : primary.main }}>
-          <label htmlFor="local-image-">
-            <Fab size="large" component="span">
-              <AddPhotoAlternateIcon />
-            </Fab>
-            <input id="local-image-" type="file" onChange={onFileChange} accept="image/*" />
-          </label>
+      <Paper style={{textAlign:"center",padding:20}}>
+        <div className="select-image">
+          <div className="local-image" style={{ color: finalTheme ? secondary : primary.main }}>
+            <label htmlFor="local-image-">
+              <Fab size="large" component="span">
+                <AddPhotoAlternateIcon />
+              </Fab>
+              <input id="local-image-" type="file" onChange={onFileChange} accept="image/*" />
+            </label>
+          </div>
+          <div className="line">or</div>
+          <div className="url-image">
+            <TextField
+              id="url-image"
+              type="text"
+              error={error}
+              className="url-text-field"
+              helperText={error}
+              color={finalTheme ? "secondary" : "primary"}
+              label="Add Image URL"
+              onChange={onUrlChange}
+            />
+          </div>
         </div>
-        <div className="line">or</div>
-        <div className="url-image">
-          <TextField
-            id="url-image"
-            type="text"
-            error={error}
-            className="url-text-field"
-            helperText={error}
-            color={finalTheme ? "secondary" : "primary"}
-            label="Add Image URL"
-            onChange={onUrlChange}
-          />
-        </div>
+        <Input
+          placeholder="Enter Cloudinary URL"
+          onChange={(e) => props.setPreviewImg(e.target.value)}
+        />
       </Paper>
     );
   }

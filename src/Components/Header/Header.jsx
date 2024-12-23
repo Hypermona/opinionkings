@@ -5,14 +5,11 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
@@ -23,6 +20,7 @@ import Token from "../../Store/token";
 import { useMutation } from "urql";
 import { LOGOUT } from "../../Queries/User";
 import { Avatar } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -93,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
   const { deleteToken, getToken,getUser } = Token.useContainer();
+  const router = useHistory()
   const user = getUser()
   const [_,callLogout] = useMutation(LOGOUT)
   const classes = useStyles();
@@ -113,7 +112,10 @@ export default function Header() {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuClose = (path) => {
+    if(path){
+      router.push(path)
+    }
     setAnchorEl(null);
     handleMobileMenuClose();
   };
@@ -137,8 +139,8 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={()=>handleMenuClose("/user/"+user.id)}>Profile</MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
       <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
     </Menu>
   );
@@ -160,7 +162,7 @@ export default function Header() {
       </MenuItem>
       {getToken() ? (
         <div>
-          <MenuItem>
+          {/* <MenuItem>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={1} color="secondary">
                 <MailIcon />
@@ -175,7 +177,7 @@ export default function Header() {
               </Badge>
             </IconButton>
             <p>Notifications</p>
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem onClick={handleProfileMenuOpen}>
             <IconButton
               aria-label="account of current user"

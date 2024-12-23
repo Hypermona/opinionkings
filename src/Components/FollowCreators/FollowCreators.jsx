@@ -16,6 +16,7 @@ import { useMutation } from "urql";
 import { GET_USERS, UPDATE_FOLLOW } from "../../Queries/User";
 import token from "../../Store/token";
 import useOnceQuery from "../../hooks/useOnceQuery";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,14 +63,26 @@ function FollowCreators() {
                     <ListItemIcon>
                       <Avatar src={u.image} alt={u.name} />
                     </ListItemIcon>
-                    <ListItemText primary={u.name} secondary={"@" + u.userName} style={{whiteSpace:"nowrap"}} />
+
+                    <ListItemText
+                      primary={u.name}
+                      secondary={<Link to={"user/" + u.id}>{"@" + u.userName}</Link>}
+                      style={{ whiteSpace: "nowrap" }}
+                    />
+
+                    
                     <Button
-                      onClick={()=>onFollow(u.id)}
+                      onClick={() => onFollow(u.id)}
                       size="small"
                       variant="outlined"
-                      style={{ color: "#289bd7", borderColor: "#289bd7", borderRadius: 18,minWidth:100 }}
+                      style={{
+                        color: "#289bd7",
+                        borderColor: "#289bd7",
+                        borderRadius: 18,
+                        minWidth: 100,
+                      }}
                     >
-                      {currentUser?.following?.includes(u.id)?"Unfollow": "Follow"}
+                      {currentUser?.following?.includes(u.id) ? "Unfollow" : "Follow"}
                     </Button>
                   </ListItem>
                   <Divider />
